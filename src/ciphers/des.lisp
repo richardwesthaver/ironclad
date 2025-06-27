@@ -8,7 +8,6 @@
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
 ;;; the sboxes of DES
 
 (declaim (type (simple-array (unsigned-byte 32) (64))

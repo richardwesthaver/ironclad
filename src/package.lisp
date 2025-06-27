@@ -227,7 +227,6 @@
      (setq *readtable* *ironclad-readtable*)))
 
 (defun ironclad-implementation-features ()
-  #+sbcl
   (list* sb-c:*backend-byte-order*
          (if (= sb-vm:n-word-bits 32)
              :32-bit
@@ -239,34 +238,11 @@
                          (when (and sym (fboundp sym))
                            '(:ironclad-sb-vm-ea)))))
                ((member :arm64 *features*)
-                '(:ironclad-fast-mod64-arithmetic))))
-  #+cmu
-  (list (c:backend-byte-order c:*target-backend*)
-        (if (= vm:word-bits 32)
-            :32-bit
-            :64-bit)
-        :ironclad-fast-mod32-arithmetic)
-  #+lispworks
-  (list ;; Disable due to problem reports from Lispworks users and
-        ;; non-obviousness of the fix.
-        #+nil
-        (when (not (member :lispworks4 *features*))
-          '(:ironclad-md5-lispworks-int32)))
-  #+openmcl
-  (list* (when (member :x86-64 *features*)
-           '(:ironclad-fast-mod32-arithmetic
-             :ironclad-fast-mod64-arithmetic)))
-  #+ecl
-  (list :ironclad-fast-mod32-arithmetic
-        :ironclad-fast-mod64-arithmetic)
-  #-(or sbcl cmu lispworks openmcl ecl)
-  nil)
+                '(:ironclad-fast-mod64-arithmetic)))))
 
 (dolist (f (ironclad-implementation-features))
   (pushnew f *features*))
 
 ;; Enable assembly optimizations, unless we are either in ECL using only the
 ;; bytecode compiler or in an older version of CCL.
-#-(or ecl-bytecmp
-      (and ccl (not ccl-1.12)))
 (pushnew :ironclad-assembly *features*)

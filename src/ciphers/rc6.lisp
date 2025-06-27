@@ -24,14 +24,14 @@
     (loop for i from 2 upto (* n-rounds 2) by 2
           for (a b c d) on vars by #'cdr
           collect `(let ((v (rol32 (mod32* ,b
-                                           #+(and sbcl x86)
+                                           #+x86
                                            (ldb (byte 32 0) (sb-vm::%lea ,b ,b 1 1))
-                                           #-(and sbcl x86)
+                                           #-x86
                                            (mod32+ (mod32ash ,b 1) 1)) 5))
                          (u (rol32 (mod32* ,d
-                                           #+(and sbcl x86)
+                                           #+x86
                                            (ldb (byte 32 0) (sb-vm::%lea ,d ,d 1 1))
-                                           #-(and sbcl x86)
+                                           #-x86
                                            (mod32+ (mod32ash ,d 1) 1)) 5)))
                     (declare (type (unsigned-byte 32) u v))
                     (setf ,a (mod32+ (rol32 (logxor ,a v) (mod u 32))
@@ -54,14 +54,14 @@
     (loop for i from (* n-rounds 2) downto 2 by 2
           for (a b c d) on vars by #'cdddr
           collect `(let ((u (rol32 (mod32* ,d
-                                           #+(and sbcl x86)
+                                           #+x86
                                            (ldb (byte 32 0) (sb-vm::%lea ,d ,d 1 1))
-                                           #-(and sbcl x86)
+                                           #-x86
                                            (mod32+ (mod32ash ,d 1) 1)) 5))
                          (v (rol32 (mod32* ,b
-                                           #+(and sbcl x86)
+                                           #+x86
                                            (ldb (byte 32 0) (sb-vm::%lea ,b ,b 1 1))
-                                           #-(and sbcl x86)
+                                           #-x86
                                            (mod32+ (mod32ash ,b 1) 1)) 5)))
                     (declare (type (unsigned-byte 32) u v))
                     (setf ,c (logxor (ror32 (mod32- ,c (aref round-keys ,(1+ i)))

@@ -17,7 +17,6 @@
 ;;; applicable only to RC2) would also support specifying the number of
 ;;; rounds for many ciphers.
 
-
 ;;; PITABLE from section 2.
 
 (defconst +rc2-pitable+

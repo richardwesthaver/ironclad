@@ -3,7 +3,6 @@
 
 (in-package :crypto)
 
-
 ;;; Validity of modes for ciphers.
 
 (defmethod valid-mode-for-cipher-p (cipher mode)

@@ -4,7 +4,6 @@
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
 ;;; various constant data arrays used by Twofish
 
 (declaim (type (simple-octet-vector 256)

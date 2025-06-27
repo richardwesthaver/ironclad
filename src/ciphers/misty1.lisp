@@ -4,7 +4,6 @@
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
 ;;; required tables
 
 (defconst +misty1-s7table+
