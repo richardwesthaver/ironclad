@@ -37,7 +37,7 @@
 
 (defsystem "ironclad/core"
   :class ironclad-system
-  :depends-on (#+sbcl "sb-rotate-byte" #+sbcl "sb-posix" "bordeaux-threads")
+  :depends-on ("sb-rotate-byte" "sb-posix" "bordeaux-threads" "std")
   :serial t
   :components ((:static-file "LICENSE")
                (:static-file "NEWS")
@@ -205,7 +205,8 @@
 (defsystem "ironclad"
   :class ironclad-system
   :in-order-to ((test-op (test-op "ironclad/tests")))
-  :depends-on ("ironclad/core"
+  :depends-on ("std"
+               "ironclad/core"
                "ironclad/ciphers"
                "ironclad/digests"
                "ironclad/macs"
