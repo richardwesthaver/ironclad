@@ -54,14 +54,7 @@
                              (:file "util")
                              (:module "opt"
                               :serial t
-                              :components ((:module "ccl"
-                                            :if-feature :ccl
-                                            :components ((:file "x86oid-vm")))
-                                           (:module "ecl"
-                                            :if-feature :ecl
-                                            :components ((:file "c-functions")))
-                                           (:module "sbcl"
-                                            :if-feature :sbcl
+                              :components ((:module "sbcl"
                                             :serial t
                                             :components ((:file "fndb")
                                                          (:file "x86oid-vm")
@@ -84,7 +77,6 @@
                               :components ((:file "prng")
                                            (:file "os-prng")))
                              (:file "math")
-                             #+(or lispworks sbcl openmcl cmu allegro abcl ecl clisp)
                              (:file "octet-stream")
                              (:module "aead"
                               :serial t
@@ -141,8 +133,7 @@
   ("kupyna" :depends-on ("ironclad/cipher/kalyna"))
   "md2"
   "md4"
-  ("md5" :components ((:file "md5")
-                      (:file "md5-lispworks-int32")))
+  ("md5" :components ((:file "md5")))
   "ripemd-128"
   "ripemd-160"
   "sha1"

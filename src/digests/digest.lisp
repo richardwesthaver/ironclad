@@ -3,13 +3,10 @@
 
 (in-package :crypto)
 
-
 ;;; defining digest (hash) functions
-
 (eval-when (:compile-toplevel :load-toplevel)
   (defconstant +buffer-size+ (* 128 1024))
-  (defconstant +seq-copy-buffer-size+ 512)
-) ; EVAL-WHEN
+  (defconstant +seq-copy-buffer-size+ 512))
 
 (deftype buffer-index () `(integer 0 (,+buffer-size+)))
 
@@ -105,9 +102,8 @@
           (and cmu 32-bit))
     (setf (aref block lo) (ldb (byte 32 0) length)
           (aref block hi) (ldb (byte 32 32) length))))
-
-;;; macros for "mid-level" functions
 
+;;; macros for "mid-level" functions
 (defmacro define-digest-registers ((digest-name &key (endian :big) (size 4) (digest-registers nil)) &rest registers)
   (let* ((struct-name (symbolicate digest-name '#:-regs))
          (constructor (symbolicate '#:initial- struct-name))
@@ -222,9 +218,8 @@
                                    (make-array digest-size
                                                :element-type '(unsigned-byte 8))
                                    0))))))))))
-
-;;; common superclass (superstructure?) for MD5-style digest functions
 
+;;; common superclass (superstructure?) for MD5-style digest functions
 (defstruct (mdx
              (:constructor nil)
              (:copier nil))
@@ -275,7 +270,7 @@
                       (incf (mdx-amount state) length)
                       state)))))
 (declaim (notinline mdx-updater))
-
+
 ;;; high-level generic function drivers
 
 ;;; These three functions are intended to be one-shot ways to digest
@@ -283,7 +278,6 @@
 ;;; familiar digest interface below, but these are likely to be slightly
 ;;; more efficient, as well as more obvious about what you're trying to
 ;;; do.
-
 (declaim (notinline make-digest))
 
 (defmethod digest-file ((digest-name cons) pathname &rest kwargs)
