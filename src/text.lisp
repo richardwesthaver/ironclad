@@ -6,8 +6,7 @@
 
 (defun execute-with-digesting-text-stream (digest format fn)
   (with-open-stream (stream (ironclad:make-digesting-stream digest))
-    (with-open-stream (text-stream (flexi-streams:make-flexi-stream
-                                    stream :external-format (flexi-streams:make-external-format format)))
+    (with-open-stream (text-stream (io/stream:make-decoding-stream stream :external-format format))
       (funcall fn text-stream)
       (finish-output text-stream)
       (ironclad:produce-digest stream))))

@@ -338,9 +338,7 @@
     (t
      (error 'type-error :datum digest-name :expected-type 'symbol))))
 
-
 ;;; the digest-defining macro
-
 (defun digestp (sym)
   (get sym '%digest-length))
 

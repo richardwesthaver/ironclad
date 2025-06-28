@@ -7,4 +7,4 @@
             :components
             ((:file "text")
              )))
-  :depends-on (:ironclad :flexi-streams))
+  :depends-on (:ironclad :std))
