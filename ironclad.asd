@@ -239,9 +239,7 @@
   :depends-on ("ironclad" "rt")
   :version "0.61"
   :in-order-to ((test-op (load-op "ironclad/tests")))
-  :perform (test-op (o s)
-             (or (funcall (intern "DO-TESTS" (find-package "RTEST")))
-                 (error "TEST-OP failed for IRONCLAD/TESTS")))
+  :perform (test-op (o s) (uiop:symbol-call :rt :do-tests :ironclad))
   :components ((:module "testing"
                 :components ((:file "testfuns")
                              (:module "test-vectors"
