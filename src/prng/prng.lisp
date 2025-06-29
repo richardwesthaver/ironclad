@@ -1,9 +1,7 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; prng.lisp -- common functions for pseudo-random number generators
-
 (in-package :crypto)
 
-
 (defvar *prng* nil
   "Default pseudo-random-number generator for use by all crypto
   functions.  Defaults to a sensible OS-specific value.")
@@ -59,14 +57,15 @@ replacement for COMMON-LISP:RANDOM."
                     floor)))))))
 
 (defun os-random-seed (source num-bytes)
-  #+unix(let ((path (cond
-                      ((eq source :random) #P"/dev/random")
-                      ((eq source :urandom) #P"/dev/urandom")
-                      (t (error 'ironclad-error :format-control "Source must be either :random or :urandom"))))
-              (seq (make-array num-bytes :element-type '(unsigned-byte 8))))
-          (with-open-file (seed-file path :element-type '(unsigned-byte 8))
-            (assert (>= (read-sequence seq seed-file) num-bytes))
-            seq))
+  #+unix
+  (let ((path (cond
+                ((eq source :random) #P"/dev/random")
+                ((eq source :urandom) #P"/dev/urandom")
+                (t (error 'ironclad-error :format-control "Source must be either :random or :urandom"))))
+        (seq (make-array num-bytes :element-type '(unsigned-byte 8))))
+    (with-open-file (seed-file path :element-type '(unsigned-byte 8))
+      (assert (>= (read-sequence seq seed-file) num-bytes))
+      seq)))
   #-unix (error 'ironclad-error :format-control "OS-RANDOM-SEED is not supported on your platform."))
 
 (defun read-seed (path &optional (prng *prng*))

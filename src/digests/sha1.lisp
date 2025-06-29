@@ -47,9 +47,9 @@
            #.(burn-baby-burn))
   ;; FIXME: There must be a better way to do this
   ;; per-implementation/architecture specialization.
-  #+(and sbcl x86-64 ironclad-assembly)
+  #+(and x86-64 ironclad-assembly)
   (%update-sha1-block regs block)
-  #-(and sbcl x86-64 ironclad-assembly)
+  #-(and x86-64 ironclad-assembly)
   (let ((a (sha1-regs-a regs)) (b (sha1-regs-b regs))
         (c (sha1-regs-c regs)) (d (sha1-regs-d regs))
         (e (sha1-regs-e regs)))
@@ -71,26 +71,12 @@
                          finally (return `(progn ,@forms))))))
       (flet ((f1 (x y z)
                (declare (type (unsigned-byte 32) x y z))
-               #+cmu
-               (kernel:32bit-logical-xor z
-                                         (kernel:32bit-logical-and x
-                                                                   (kernel:32bit-logical-xor y z)))
-               #-cmu
                (logxor z (logand x (logxor y z))))
              (f2 (x y z)
                (declare (type (unsigned-byte 32) x y z))
-               #+cmu
-               (kernel:32bit-logical-xor x (kernel:32bit-logical-xor y z))
-               #-cmu
                (ldb (byte 32 0) (logxor x y z)))
              (f3 (x y z)
                (declare (type (unsigned-byte 32) x y z))
-               #+cmu
-               (kernel:32bit-logical-or (kernel:32bit-logical-or
-                                         (kernel:32bit-logical-and x y)
-                                         (kernel:32bit-logical-and x z))
-                                        (kernel:32bit-logical-and y z))
-               #-cmu
                (ldb (byte 32 0)
                     (logior (logand x y) (logand x z) (logand y z)))))
         #+ironclad-fast-mod32-arithmetic
@@ -109,7 +95,7 @@
         regs))))
 
 ;; ugh.
-#+(and ironclad-fast-mod32-arithmetic (not (and sbcl (or x86 x86-64))))
+#+(and ironclad-fast-mod32-arithmetic (not (or x86 x86-64)))
 (declaim (inline expand-block))
 
 (defun expand-block (block)
@@ -119,14 +105,7 @@ available."
            #.(burn-baby-burn))
   (loop for i of-type (integer 16 80) from 16 below 80
         do (setf (aref block i)
-                 (rol32 #+cmu
-                        (kernel:32bit-logical-xor
-                         (kernel:32bit-logical-xor (aref block (- i 3))
-                                                   (aref block (- i 8)))
-                         (kernel:32bit-logical-xor (aref block (- i 14))
-                                                   (aref block (- i 16))))
-                        #-cmu
-                        (ldb (byte 32 0)
+                 (rol32 (ldb (byte 32 0)
                              (logxor (aref block (- i 3))
                                      (aref block (- i 8))
                                      (aref block (- i 14))

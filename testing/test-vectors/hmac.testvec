@@ -4,11 +4,9 @@
 (:mac-test #h"4a656665" #h"7768617420646f2079612077616e7420666f72206e6f7468696e673f" #h"750c783e6ab0b503eaa86e310a5db738" :md5)
 (:mac-test #h"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #h"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" #h"56be34521d144c88dbb8c733f0e8b3f6" :md5)
 
-
 ;;; tests from RFC 4231
 
 ;;; HMAC-SHA-224
-
 (:mac-test #h"0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b" #h"4869205468657265" #h"896fb1128abbdf196832107cd49df33f47b4b1169912ba4f53684b22" :sha224)
 (:mac-test #h"4a656665" #h"7768617420646f2079612077616e7420666f72206e6f7468696e673f" #h"a30e01098bc6dbbf45690f3a7e9e6d0f8bbea2a39e6148008fd05e44" :sha224)
 (:mac-test #h"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #h"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" #h"7fb3cb3588c6c1f6ffa9694d7d6ad2649365b0c1f65d69d1ec8333ea" :sha224)

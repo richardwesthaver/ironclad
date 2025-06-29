@@ -21,9 +21,7 @@
                         (char-to-digit (char string (1+ j)))))
             finally (return key)))))
 
-
 ;;; test vector files
-
 (defun test-vector-filename (ident)
   (merge-pathnames (make-pathname :directory '(:relative "test-vectors")
                                   :name (substitute #\- #\/ (format nil "~(~A~)" ident))
@@ -57,9 +55,8 @@
                 (error "No test function defined for ~A" (car form)))
               (apply test-function name (cdr form)))))
          finally (return t)))))
-
-;;; cipher testing
 
+;;; cipher testing
 (defun cipher-test-guts (cipher-name mode key input output
                          &optional extra-make-cipher-args)
   (let ((cipher (apply #'crypto:make-cipher cipher-name
@@ -76,7 +73,6 @@
       (error "decryption failed for ~A on key ~A, input ~A, output ~A"
              cipher-name key output input))))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defun cipher-stream-test-guts (cipher-name mode key input output
                                 &optional extra-args)
   (let* ((out-stream (crypto:make-octet-output-stream))
@@ -129,11 +125,9 @@
               (mismatch buffer keystream))
       (error "getting/setting key stream position failed for ~A on key ~A" cipher-name key))))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defun stream-mode-test/stream (cipher-name hexkey hexinput hexoutput)
   (cipher-stream-test-guts cipher-name :stream hexkey hexinput hexoutput))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defun stream-nonce-mode-test/stream (cipher-name hexkey hexiv hexinput hexoutput)
   (cipher-stream-test-guts cipher-name :stream hexkey hexinput hexoutput
                            (list :initialization-vector hexiv)))
@@ -145,7 +139,6 @@
         (cons :stream-nonce-mode-test 'stream-nonce-mode-test)
         (cons :keystream-test 'keystream-test)))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defparameter *cipher-stream-tests*
   (list (cons :ecb-mode-test 'ignore-test)
         (cons :ecb-tweak-mode-test 'ignore-test)
@@ -153,11 +146,9 @@
         (cons :stream-nonce-mode-test 'stream-nonce-mode-test/stream)
         (cons :keystream-test 'ignore-test)))
 
-
 ;;; encryption mode consistency checking
 
 ;;; tests from NIST
-
 (defun mode-test (mode cipher-name key iv input output)
   (labels ((frob-hex-string (cipher func input)
              (let ((scratch (copy-seq input)))
@@ -206,9 +197,7 @@
   (list (cons :mode-test 'ignore-test)
         (cons :mode-padding-test 'mode-padding-test)))
 
-
 ;;; digest testing routines
-
 (defun digest-test/base (digest-name input expected-digest)
   (let ((result (crypto:digest-sequence digest-name input)))
     (when (mismatch result expected-digest)
@@ -234,7 +223,6 @@
     (when (mismatch result expected-digest)
       (error "fill-pointer'd ~A digest of ~S failed" digest-name input))))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defun digest-test/stream (digest-name input expected-digest)
   (let* ((stream (crypto:make-digesting-stream digest-name)))
     (when (plusp (length input))
@@ -288,7 +276,6 @@
         (cons :digest-bit-test 'ignore-test)
         (cons :xof-digest-test 'ignore-test)))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defparameter *digest-stream-tests*
   (list (cons :digest-test 'digest-test/stream)
         (cons :digest-bit-test 'ignore-test)
@@ -299,9 +286,7 @@
         (cons :digest-bit-test 'ignore-test)
         (cons :xof-digest-test 'ignore-test)))
 
-
 ;;; mac testing routines
-
 (defun mac-test/base (mac-name key data expected-digest &rest args)
   (let ((mac (apply #'crypto:make-mac mac-name key args)))
     (crypto:update-mac mac data)
@@ -320,7 +305,6 @@
                     (error "incremental ~A mac of ~A failed on key ~A, args ~A"
                            mac-name data key args)))))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defun mac-test/stream (mac-name key data expected-digest &rest args)
   (let ((stream (apply #'crypto:make-authenticating-stream mac-name key args)))
     (when (plusp (length data))
@@ -356,14 +340,12 @@
 (defparameter *mac-incremental-tests*
   (list (cons :mac-test 'mac-test/incremental)))
 
-#+(or lispworks sbcl cmucl openmcl allegro abcl ecl clisp)
 (defparameter *mac-stream-tests*
   (list (cons :mac-test 'mac-test/stream)))
 
 (defparameter *mac-reinitialize-instance-tests*
   (list (cons :mac-test 'mac-test/reinitialize-instance)))
 
-
 ;;; PRNG testing routines
 (defun fortuna-test (name seed entropy expected-sequence)
   (declare (ignore name))

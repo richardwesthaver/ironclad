@@ -1,11 +1,8 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; dsa.lisp -- implementation of the Digital Signature Algorithm
-
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass dsa-key ()
   ((group :initarg :group :reader group)))
 
@@ -23,9 +20,7 @@
 (defun dsa-key-g (dsa-key)
   (group-gval (group dsa-key)))
 
-
 ;;; function definitions
-
 (defmethod make-public-key ((kind (eql :dsa))
                             &key p q g y &allow-other-keys)
   (unless p

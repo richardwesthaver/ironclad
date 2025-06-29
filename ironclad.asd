@@ -37,7 +37,7 @@
 
 (defsystem "ironclad/core"
   :class ironclad-system
-  :depends-on ("sb-rotate-byte" "sb-posix" "bordeaux-threads" "std")
+  :depends-on ("sb-rotate-byte" "sb-posix" "std")
   :serial t
   :components ((:static-file "LICENSE")
                (:static-file "NEWS")
@@ -213,13 +213,12 @@
                              ;; that we're running at compile time,
                              ;; which we don't care about the speed of
                              ;; anyway...
-                             #+sbcl (sb-ext:compiler-note #'muffle-warning))
+                             (sb-ext:compiler-note #'muffle-warning))
                 ,@body)))
   (defmethod perform :around ((op compile-op) (c ironclad-source-file))
     (let ((*print-base* 10)               ; INTERN'ing FORMAT'd symbols
           (*print-case* :upcase)
-          #+sbcl (sb-ext:*inline-expansion-limit* (max sb-ext:*inline-expansion-limit* 1000))
-          #+cmu (ext:*inline-expansion-limit* (max ext:*inline-expansion-limit* 1000)))
+          (sb-ext:*inline-expansion-limit* (max sb-ext:*inline-expansion-limit* 1000)))
       (do-silently (call-next-method))))
 
   (defmethod perform :around ((op load-op) (c ironclad-source-file))
@@ -228,9 +227,7 @@
 (defmethod perform :after ((op load-op) (c (eql (find-system "ironclad"))))
   (provide :ironclad))
 
-
 ;;; testing
-
 (defclass test-vector-file (static-file)
   ((type :initform "testvec")))
 

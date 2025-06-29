@@ -1,8 +1,7 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
-#+sbcl
 (in-package :sb-c)
 
-#+(and sbcl (or x86 x86-64) ironclad-assembly)
+#+(and (or x86 x86-64) ironclad-assembly)
 (progn
 
 (defknown (ironclad::fill-block-ub8-le ironclad::fill-block-ub8-be)
@@ -166,4 +165,4 @@
   (values)
   (any)
   :overwrite-fndb-silently t)
-);#+sbcl
+)

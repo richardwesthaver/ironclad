@@ -9,9 +9,7 @@
 (:digest-test #a"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" #h"761C457BF73B14D27E9E9265C46F4B4DDA11F940")
 (:digest-test #a"12345678901234567890123456789012345678901234567890123456789012345678901234567890" #h"50ABF5706A150990A08B2C5EA40FA0E585554732")
 
-
 ;;; bit-level tests from NESSIE (http://www.cryptonessie.org/)
-
 (:digest-bit-test 0 #x80 63 #h"C80B973C1157A7FE4F4150AD4C2A932494BF7BC7")
 (:digest-bit-test 0 #x40 63 #h"56B60A86C48BF35C2688B2B4E44E906C22221CF6")
 (:digest-bit-test 0 #x20 63 #h"F07DC15D139E20B569D018C517EA697434CB35AE")
@@ -525,9 +523,7 @@
 (:digest-bit-test 63 #x02 0 #h"D229D9D61E24B80CB32373BB3362A3BDC7DCCE73")
 (:digest-bit-test 63 #x01 0 #h"AAE81062811EDFD2AF3081941D667FB7033DCE80")
 
-
 ;;; byte-level tests from NIST's Cryptographic Algorithm Validation Program (http://csrc.nist.gov/groups/STM/cavp/index.html)
-
 (:digest-test #h"36" #h"c1dfd96eea8cc2b62785275bca38ac261256e278")
 (:digest-test #h"195a" #h"0a1c2d555bbe431ad6288af5a54f93e0449c9232")
 (:digest-test #h"df4bd2" #h"bf36ed5d74727dfd5d7854ec6b1d49468d8ee8aa")

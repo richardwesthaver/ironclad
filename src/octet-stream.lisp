@@ -1,12 +1,9 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; octet-stream.lisp -- like string-streams, but with (VECTOR (UNSIGNED-BYTE 8))
-
 (in-package :crypto)
 
-
 ;;; portability definitions
-
-;;; TRIVIAL-GRAY-STREAMS has it, we might as well, too...
+;; TRIVIAL-GRAY-STREAMS has it, we might as well, too...
 (eval-when (:compile-toplevel :load-toplevel :execute)
 (defvar *binary-input-stream-class*
   (quote sb-gray:fundamental-binary-input-stream))
@@ -179,9 +176,7 @@ of a string output-stream."
      ,@body
      (get-output-stream-octets ,var)))
 
-
 ;;; digesting streams
-
 (defclass digesting-stream (#.*binary-output-stream-class*)
   ((digest :initarg :digest :reader stream-digest)
    (buffer :initform (make-array 64 :element-type '(unsigned-byte 8))
@@ -237,9 +232,7 @@ of a string output-stream."
      ,@body
      (produce-digest ,var)))
 
-
 ;;; encrypting and decrypting streams
-
 (defclass crypting-stream ()
   ((cipher :initarg :cipher :reader stream-cipher)
    (buffer :initarg :buffer :reader stream-buffer)

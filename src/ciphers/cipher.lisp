@@ -38,7 +38,6 @@
            :ciphertext-start start :ciphertext-end end
            :plaintext-start start))
 
-
 ;;; utilities for wordwise fetches and stores
 
 ;;; we attempt to make this as efficient as possible.  the first check we
@@ -103,9 +102,7 @@
                                (declare (type (unsigned-byte ,(* size 8)) ,@word-vars))
                                ,@body))))))
 
-
 ;;; mixins for dispatching
-
 (defclass 8-byte-block-mixin ()
   ())
 
@@ -121,7 +118,6 @@
 (defclass 128-byte-block-mixin ()
   ())
 
-
 ;;; defining ciphers
 
 ;;; the idea behind this is that one only has to implement encryption

@@ -3,7 +3,6 @@
 
 (in-package :crypto)
 
-
 (define-digest-registers (md4 :endian :little)
   (a #x67452301)
   (b #xefcdab89)

@@ -529,13 +529,13 @@ behavior."
                       (incf input-block-start ,size)
                       (incf output-block-start ,size)
                       (decf block-length ,size))))
-    #+(and sbcl x86-64 ironclad-assembly)
+    #+(and x86-64 ironclad-assembly)
     (copy-bytes 16 (mov128 input-block input-block-start
                            output-block output-block-start))
-    #+(and sbcl x86-64)
+    #+x86-64
     (copy-bytes 8 (setf (ub64ref/le output-block output-block-start)
                         (ub64ref/le input-block input-block-start)))
-    #+(and sbcl (or x86 x86-64))
+    #+(or x86 x86-64)
     (copy-bytes 4 (setf (ub32ref/le output-block output-block-start)
                         (ub32ref/le input-block input-block-start)))
     (replace output-block input-block
@@ -548,24 +548,24 @@ behavior."
                                           output-block output-block-start)
   (declare (ignorable env block-length input-block input-block-start output-block output-block-start))
   (cond
-    #+(and sbcl x86-64 ironclad-assembly)
+    #+(and x86-64 ironclad-assembly)
     ((and (constantp block-length env)
           (= block-length 16))
      `(mov128  ,input-block ,input-block-start
                ,output-block ,output-block-start))
-    #+(and sbcl x86-64 ironclad-assembly)
+    #+(and x86-64 ironclad-assembly)
     ((and (constantp block-length env)
           (zerop (mod block-length 16)))
      (let ((i (gensym)))
        `(loop for ,i from 0 below ,block-length by 16 do
           (mov128 ,input-block (+ ,input-block-start ,i)
                   ,output-block (+ ,output-block-start ,i)))))
-    #+(and sbcl x86-64)
+    #+x86-64
     ((and (constantp block-length env)
           (= block-length 8))
      `(setf (ub64ref/le ,output-block ,output-block-start)
             (ub64ref/le ,input-block ,input-block-start)))
-    #+(and sbcl (or x86 x86-64))
+    #+(or x86 x86-64)
     ((and (constantp block-length env)
           (= block-length 4))
      `(setf (ub32ref/le ,output-block ,output-block-start)

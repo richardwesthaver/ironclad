@@ -32,34 +32,14 @@
 
 (declaim (inline update-digest-from-vector))
 
-#+(or cmucl sbcl)
 (defun update-digest-from-vector (digest vector start end)
   ;; SBCL and CMUCL have with-array-data, so copying can be avoided even
   ;; for non-simple vectors.
   (declare (type (vector (unsigned-byte 8)) vector)
            (type index start end))
-  (#+cmucl lisp::with-array-data
-   #+sbcl sb-kernel:with-array-data ((data vector) (real-start start) (real-end end))
+  (sb-kernel:with-array-data ((data vector) (real-start start) (real-end end))
    (declare (ignore real-end))
    (update-digest digest data :start real-start :end (+ real-start (- end start)))))
-
-#-(or cmu sbcl)
-(defun update-digest-from-vector (state vector start end)
-  (declare (optimize speed)
-           (type (vector (unsigned-byte 8)) vector)
-           (type index start end))
-  (if (typep vector 'simple-octet-vector)
-      (update-digest state vector :start start :end end)
-      ;; It's a non-simple vector. Update the digest using a temporary buffer.
-      (let ((buffer (make-array +seq-copy-buffer-size+ :element-type '(unsigned-byte 8))))
-        (declare (dynamic-extent buffer))
-        (loop with offset of-type index = start
-              for length of-type index = (min +seq-copy-buffer-size+ (- end offset))
-              while (< offset end) do
-                (replace buffer vector :start1 0      :end1 length
-                                       :start2 offset :end2 (+ offset length))
-                (update-digest state buffer :start 0 :end length)
-                (incf offset length)))))
 
 ;;; Storing a length at the end of the hashed data is very common and
 ;;; can be a small bottleneck when generating lots of hashes over small
@@ -70,7 +50,7 @@
 (defun store-data-length (block length offset &optional big-endian-p)
   (let ((lo (if big-endian-p (1+ offset) offset))
         (hi (if big-endian-p offset (1+ offset))))
-    #+(and sbcl 32-bit)
+    #+32-bit
     (cond
       ((sb-int:fixnump length)
        (setf (aref block lo) length))
@@ -84,22 +64,7 @@
            (t
             (setf (aref block lo) (sb-bignum:%bignum-ref length 0)
                   (aref block hi) (sb-bignum:%bignum-ref length 1)))))))
-    #+(and cmu 32-bit)
-    (cond
-      ((ext:fixnump length)
-       (setf (aref block lo) length))
-      ;; Otherwise, we have a bignum.
-      (t
-       (locally (declare (optimize (safety 0))
-                         (type bignum:bignum-type length))
-         (cond
-           ((= (bignum:%bignum-length length) 1)
-            (setf (aref block lo) (bignum:%bignum-ref length 0)))
-           (t
-            (setf (aref block lo) (bignum:%bignum-ref length 0)
-                  (aref block hi) (bignum:%bignum-ref length 1)))))))
-    #-(or (and sbcl 32-bit)
-          (and cmu 32-bit))
+    #-(and sbcl 32-bit)
     (setf (aref block lo) (ldb (byte 32 0) length)
           (aref block hi) (ldb (byte 32 32) length))))
 
@@ -137,12 +102,12 @@
                                          (,(symbolicate digest-name '#:-regs- reg)
                                           regs))))))
                (cond
-                 #+(and sbcl :little-endian)
+                 #+little-endian
                  ((eq endian :little)
                   `(if (and (= start 0) (<= ,register-bit-size sb-vm:n-word-bits))
                        (sb-kernel:ub8-bash-copy regs 0 buffer 0 ,digest-size)
                        ,inlined-unpacking))
-                 #+(and sbcl :big-endian)
+                 #+big-endian
                  ((eq endian :big)
                   `(if (and (= start 0) (<= ,register-bit-size sb-vm:n-word-bits))
                        (sb-kernel:ub8-bash-copy regs 0 buffer 0 ,digest-size)

@@ -6,9 +6,7 @@
 (:digest-test #a"abcdefghijklmnopqrstuvwxyz" #h"45a5f72c39c5cff2522eb3429799e49e5f44b356ef926bcf390dccc2")
 (:digest-test #a"abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq" #h"75388b16512776cc5dba5da1fd890150b0c6455cb4f58b1952522525")
 
-
 ;;; byte-level tests from NIST's Cryptographic Algorithm Validation Program (http://csrc.nist.gov/groups/STM/cavp/index.html)
-
 (:digest-test #h"84" #h"3cd36921df5d6963e73739cf4d20211e2d8877c19cff087ade9d0e3a")
 (:digest-test #h"5c7b" #h"daff9bce685eb831f97fc1225b03c275a6c112e2d6e76f5faf7a36e6")
 (:digest-test #h"51ca3d" #h"2c8959023515476e38388abb43599a29876b4b33d56adc06032de3a2")

@@ -1,9 +1,7 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; fortuna.lisp -- Fortuna PRNG
-
 (in-package :crypto)
 
-
 (defparameter +min-pool-size+
   128
   "Minimum pool size before a reseed is allowed.  This should be the

@@ -130,9 +130,7 @@
                 (declare (optimize (speed 3) (space 0) (debug 0)))
                 ,@body)))
 
-
 ;;; ECB mode
-
 (macrolet ((mode-crypt (cipher-specializer block-length-expr)
              `(defmethod mode-crypt-functions ((cipher ,cipher-specializer)
                                                (mode ecb-mode))
@@ -209,9 +207,7 @@
                       encrypted-length)))))
   (define-mode-function mode-crypt message-length))
 
-
 ;;; CBC mode
-
 (macrolet ((mode-crypt (cipher-specializer block-length-expr)
              `(defmethod mode-crypt-functions ((cipher ,cipher-specializer)
                                                (mode cbc-mode))
@@ -300,9 +296,7 @@
                       encrypted-length)))))
   (define-mode-function mode-crypt message-length))
 
-
 ;;; CFB mode
-
 (macrolet ((mode-crypt (cipher-specializer block-length-expr)
              `(defmethod mode-crypt-functions ((cipher ,cipher-specializer)
                                                (mode cfb-mode))
@@ -411,9 +405,7 @@
                 length)))
   (define-mode-function mode-crypt message-length))
 
-
 ;;; CFB8 mode
-
 (macrolet ((mode-crypt (cipher-specializer block-length-expr)
            `(defmethod mode-crypt-functions ((cipher ,cipher-specializer)
                                              (mode cfb8-mode))
@@ -460,9 +452,7 @@
                 length)))
   (define-mode-function mode-crypt message-length))
 
-
 ;;; OFB mode
-
 (macrolet ((mode-crypt (cipher-specializer block-length-expr)
              `(defmethod mode-crypt-functions ((cipher ,cipher-specializer)
                                                (mode ofb-mode))
@@ -521,9 +511,7 @@
                 length)))
   (define-mode-function mode-crypt message-length))
 
-
 ;;; CTR mode
-
 (macrolet ((mode-crypt (cipher-specializer block-length-expr)
              `(defmethod mode-crypt-functions ((cipher ,cipher-specializer)
                                                (mode ctr-mode))

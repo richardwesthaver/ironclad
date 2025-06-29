@@ -1,9 +1,6 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; generator.lisp -- Fortuna PRNG generator
-
 (in-package :crypto)
-
-
 
 (defvar +fortuna-cipher-block-size+ 16
   "Fortuna is only defined for 128-bit (16-byte) cyphers")

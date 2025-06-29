@@ -1,9 +1,6 @@
 (asdf:load-system "ironclad")
 
-(defparameter *data-size*
-  #+sbcl (expt 2 27)
-  #+ccl (expt 2 23)
-  #-(or sbcl ccl) (expt 2 20))
+(defparameter *data-size* (expt 2 27))
 (defparameter *buffer-size* 32768)
 (defparameter *iterations* 100)
 (defparameter *implementation-result-file* "benchmark-tmp")

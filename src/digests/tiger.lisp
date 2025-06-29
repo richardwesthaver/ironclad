@@ -577,7 +577,6 @@
      #x705A36A3 #xCB0C0708 #x4F986044 #xE74D1475 
      #x0EA8280E #xCD56D943 #x535F5065 #xC12591D7 
      #x720AEF96 #xC83223F1 #x7363A51F #xC3A0396F)))
-
 
 #+#.(cl:if (cl:= ironclad::+tiger-wordsize+ 64) '(and) '(or))
 (defun update-tiger-block (regs block)

@@ -67,7 +67,6 @@
       (t
        (error 'unsupported-mode :mode mode))))))
 
-
 ;;; CLOS methods.
 
 ;;; This is where all the work gets done.

@@ -1,11 +1,8 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; elgamal.lisp -- implementation of the ElGamal encryption and signature scheme
-
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass elgamal-key ()
   ((group :initarg :group :reader group)))
 
@@ -22,9 +19,7 @@
 (defun elgamal-key-g (elgamal-key)
   (group-gval (group elgamal-key)))
 
-
 ;;; function definitions
-
 (defmethod make-public-key ((kind (eql :elgamal))
                             &key p g y &allow-other-keys)
   (unless p

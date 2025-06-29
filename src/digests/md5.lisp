@@ -73,31 +73,15 @@ accordingly."
     (declare (type (unsigned-byte 32) a b c d))
     (flet ((f (x y z)
              (declare (type (unsigned-byte 32) x y z))
-             #+cmu
-             (kernel:32bit-logical-xor z
-                                       (kernel:32bit-logical-and x
-                                                                 (kernel:32bit-logical-xor y z)))
-             #-cmu
              (logxor z (logand x (logxor y z))))
            (g (x y z)
              (declare (type (unsigned-byte 32) x y z))
-             #+cmu
-             (kernel:32bit-logical-xor y
-                                       (kernel:32bit-logical-and z
-                                                                 (kernel:32bit-logical-xor x y)))
-             #-cmu
              (logxor y (logand z (logxor x y))))
            (h (x y z)
              (declare (type (unsigned-byte 32) x y z))
-             #+cmu
-             (kernel:32bit-logical-xor x (kernel:32bit-logical-xor y z))
-             #-cmu
              (logxor x y z))
            (i (x y z)
              (declare (type (unsigned-byte 32) x y z))
-             #+cmu
-             (kernel:32bit-logical-xor y (kernel:32bit-logical-orc2 x z))
-             #-cmu
              (ldb (byte 32 0) (logxor y (logorc2 x z)))))
       #+ironclad-fast-mod32-arithmetic
       (declare (inline f g h i))

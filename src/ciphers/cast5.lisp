@@ -4,9 +4,7 @@
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
 ;;; s-boxes
-
 (declaim (type (simple-array (unsigned-byte 32) (256))
                +cast5-sbox0+ +cast5-sbox1+ +cast5-sbox2+ +cast5-sbox3+
                +cast5-sbox4+ +cast5-sbox5+ +cast5-sbox6+ +cast5-sbox7+))
@@ -283,9 +281,7 @@
 #xe97625a5 #x0614d1b7 #x0e25244b #x0c768347 #x589e8d82 #x0d2059d1 #xa466bb1e #xf8da0a82
 #x04f19130 #xba6e4ec0 #x99265164 #x1ee7230d #x50b2ad80 #xeaee6801 #x8db2a283 #xea8bf59e))
 
-
 ;;; the actual CAST5 implementation
-
 (deftype cast5-mask-vector () '(simple-array (unsigned-byte 32) (16)))
 (deftype cast5-rotate-vector () '(simple-array (unsigned-byte 8) (16)))
 

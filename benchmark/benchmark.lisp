@@ -1,15 +1,7 @@
 (asdf:load-system "ironclad")
 
 (defparameter *lisp-implementations*
-  `(("ABCL" "abcl --load benchmark-implementation.lisp")
-    ("AllegroCL" ,(format nil
-                          "alisp -L ~a -e '(let ((*default-pathname-defaults* ~s)) (load \"benchmark-implementation.lisp\"))'"
-                          (merge-pathnames ".clinit.cl" (user-homedir-pathname))
-                          (uiop:getcwd)))
-    ("ClozureCL" "ccl --load benchmark-implementation.lisp")
-    ("Clisp" "clisp -i benchmark-implementation.lisp")
-    ("ECL" "ecl --load benchmark-implementation.lisp")
-    ("SBCL" "sbcl --load benchmark-implementation.lisp")))
+  `(("SBCL" "sbcl --load benchmark-implementation.lisp")))
 (defparameter *implementation-result-file* "benchmark-tmp")
 (defparameter *result-file* "benchmark.org")
 

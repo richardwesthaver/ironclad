@@ -170,10 +170,8 @@
     #x00000000 #x10041040 #x00040040 #x10000040
     #x10040000 #x10001000 #x10001040 #x00000000
     #x10041040 #x00041000 #x00041000 #x00001040
-    #x00001040 #x00040040 #x10000000 #x10041000
-))
+    #x00001040 #x00040040 #x10000000 #x10041000))
 
-
 ;;; permutations and rotations for the key schedule
 (defconst permutation1
   (make-array 56 :element-type '(unsigned-byte 8)
@@ -201,9 +199,7 @@
                                       43 48 38 55 33 52
                                       45 41 49 35 28 31)))
 
-
 ;;; actual encryption and decryption guts
-
 (deftype des-round-keys () '(simple-array (unsigned-byte 32) (32)))
 
 (macrolet ((frob (left right shift-amount constant)
@@ -285,13 +281,9 @@
       (des-munge-core right left k2)
       (des-munge-core left right k3)
       (des-final-permutation left right)
-      (store-words output output-start right left))))
+      (store-words output output-start right left))))) ; MACROLET
 
-) ; MACROLET
-
-
 ;;; ECB mode encryption and decryption
-
 (defclass des (cipher 8-byte-block-mixin)
   ((encryption-keys :accessor encryption-keys :type des-round-keys)
    (decryption-keys :accessor decryption-keys :type des-round-keys)))
@@ -324,10 +316,8 @@
                    (encryption-keys-2 context)
                    (decryption-keys-1 context)))
 
-
 ;;; key scheduling
-
-;;; `dough' being a cute pun from Schiener's code.
+;; `dough' being a cute pun from Schiener's code.
 (defun des-cook-key-schedule (dough)
   (let ((schedule (make-array 32 :element-type '(unsigned-byte 32) :initial-element 0)))
     (declare (type des-round-keys dough schedule))

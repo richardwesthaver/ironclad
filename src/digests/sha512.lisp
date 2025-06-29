@@ -100,9 +100,7 @@
                                        (aref block (- i 16)))))))
     (values)))
 
-
 ;;; mid-level
-
 (defstruct (sha512
              (:constructor %make-sha512-digest
               (&aux (buffer (make-array 128 :element-type '(unsigned-byte 8)))))
@@ -126,11 +124,6 @@
   ;; Some versions of Clozure CCL have a bug where the elements of
   ;; +PRISTINE-SHA512-REGISTERS+ are considered to be negative.  Force
   ;; the compiler to see them as positive.
-  #+ccl
-  (let ((regs (sha512-regs state)))
-    (dotimes (i (length +pristine-sha512-registers+))
-      (setf (aref regs i) (ldb (byte 64 0) (aref +pristine-sha512-registers+ i)))))
-  #-ccl
   (replace (sha512-regs state) +pristine-sha512-registers+)
   (setf (sha512-amount state) 0
         (sha512-buffer-index state) 0)
@@ -141,11 +134,6 @@
   ;; Some versions of Clozure CCL have a bug where the elements of
   ;; +PRISTINE-SHA384-REGISTERS+ are considered to be negative.  Force
   ;; the compiler to see them as positive.
-  #+ccl
-  (let ((regs (sha384-regs state)))
-    (dotimes (i (length +pristine-sha384-registers+))
-      (setf (aref regs i) (ldb (byte 64 0) (aref +pristine-sha384-registers+ i)))))
-  #-ccl
   (replace (sha384-regs state) +pristine-sha384-registers+)
   (setf (sha384-amount state) 0
         (sha384-buffer-index state) 0)

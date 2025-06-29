@@ -1,12 +1,10 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 (in-package :crypto)
 
-
 ;;; scrypt from Colin Percival's
 ;;; "Stronger Key Derivation via Sequential Memory-Hard Functions"
 ;;; presented at BSDCan'09, May 2009.
 ;;; http://www.tarsnap.com/scrypt.html
-
 (defclass scrypt-kdf ()
  ((n :initarg :n :reader scrypt-kdf-N)
   (r :initarg :r :reader scrypt-kdf-r)

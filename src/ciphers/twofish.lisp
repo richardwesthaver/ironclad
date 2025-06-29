@@ -286,9 +286,7 @@
 #xE2510FE2 #x00000000 #x9A196F9A #xE01A9DE0 #x8F94368F #xE6C742E6
 #xECC94AEC #xFDD25EFD #xAB7FC1AB #xD8A8E0D8))
 
-
 ;;; the actual implementation of Twofish
-
 (deftype twofish-s-boxes () '(simple-array (unsigned-byte 32) (1024)))
 (deftype twofish-round-keys () '(simple-array (unsigned-byte 32) (40)))
 

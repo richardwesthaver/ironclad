@@ -681,7 +681,6 @@
 #32@(#x01000000 #x02000000 #x04000000 #x08000000 #x10000000
                 #x20000000 #x40000000 #x80000000 #x1B000000 #x36000000))
 
-
 ;;; the actual AES implementation
 
 ;;; waste a little space for "common" 128-bit keys, but is anybody really

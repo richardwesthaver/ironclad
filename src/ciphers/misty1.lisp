@@ -71,17 +71,15 @@
 #x0185 #x008C #x008F #x0040 #x01B5 #x00BE #x0078 #x0000 #x00AC #x0110
 #x015E #x0124 #x0002 #x01BC #x00A2 #x00EA #x0070 #x01FC #x0116 #x015C
 #x004C #x01C2))
-
-;;; types and context definition
 
+;;; types and context definition
 (deftype misty1-round-keys () '(simple-array (unsigned-byte 16) (32)))
 
 (defclass misty1 (cipher 8-byte-block-mixin)
   ((round-keys :accessor round-keys :type misty1-round-keys)))
-
-;;; block functions and key expansion
 
-;;; Declaring these inline produces screwy results in SBCL (bug?).
+;;; block functions and key expansion
+;; Declaring these inline produces screwy results in SBCL (bug?).
 (declaim (notinline fi fl fl-inv fo))
 
 (defun fi (fi-in fi-key)

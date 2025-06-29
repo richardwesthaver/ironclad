@@ -194,13 +194,10 @@
      #x01c36ae4 #xd6ebe1f9 #x90d4f869 #xa65cdea0 #x3f09252d #xc208e69f
      #xb74e6132 #xce77e25b #x578fdfe3 #x3ac372e6))
 
-
 ;;; the actual Blowfish implementation
-
 (eval-when (:compile-toplevel :load-toplevel)
-(deftype blowfish-p-array () '(simple-array (unsigned-byte 32) (18)))
-(deftype blowfish-s-boxes () '(simple-array (unsigned-byte 32) (1024)))
-)
+  (deftype blowfish-p-array () '(simple-array (unsigned-byte 32) (18)))
+  (deftype blowfish-s-boxes () '(simple-array (unsigned-byte 32) (1024))))
 
 (defclass blowfish (cipher 8-byte-block-mixin)
   ((p-array :accessor p-array :type blowfish-p-array)
