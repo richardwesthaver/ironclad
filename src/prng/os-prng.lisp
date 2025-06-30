@@ -6,7 +6,7 @@
 #+unix
 (defparameter *os-prng-stream* nil)
 #+unix
-(defparameter *os-prng-stream-lock* (bt2:make-lock))
+(defparameter *os-prng-stream-lock* (std:make-mutex))
 
 (defclass os-prng ()
   ())
@@ -14,7 +14,7 @@
 (defmethod prng-random-data (num-bytes (prng os-prng))
   #+unix
   (let* ((seq (make-array num-bytes :element-type '(unsigned-byte 8)))
-         (n (bt2:with-lock-held (*os-prng-stream-lock*)
+         (n (sb-thread:with-mutex (*os-prng-stream-lock*)
               (unless (and *os-prng-stream* (open-stream-p *os-prng-stream*))
                 (setf *os-prng-stream* (open #P"/dev/urandom"
                                              :element-type '(unsigned-byte 8))))

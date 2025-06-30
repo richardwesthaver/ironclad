@@ -65,7 +65,7 @@ replacement for COMMON-LISP:RANDOM."
         (seq (make-array num-bytes :element-type '(unsigned-byte 8))))
     (with-open-file (seed-file path :element-type '(unsigned-byte 8))
       (assert (>= (read-sequence seq seed-file) num-bytes))
-      seq)))
+      seq))
   #-unix (error 'ironclad-error :format-control "OS-RANDOM-SEED is not supported on your platform."))
 
 (defun read-seed (path &optional (prng *prng*))
