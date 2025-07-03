@@ -1,14 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; sm4.lisp -- implementation of SM4 (GB/T 32907-2016)
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
-;;;
 ;;; Parameters
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconst +sm4-s+
     #8@(#xd6 #x90 #xe9 #xfe #xcc #xe1 #x3d #xb7
@@ -122,11 +116,7 @@
             (aref round-keys (+ (* 4 i) 3)) k3))
     cipher))
 
-
-;;;
 ;;; Rounds
-;;;
-
 (define-block-encryptor sm4 16
   (let ((round-keys (sm4-round-keys context)))
     (declare (type (simple-array (unsigned-byte 32) (32)) round-keys))

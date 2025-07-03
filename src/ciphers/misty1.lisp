@@ -1,11 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; misty1.lisp -- implementation of the MISTY1 block cipher from RFC 2994
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
 ;;; required tables
-
 (defconst +misty1-s7table+
 #8@(#x1B #x32 #x33 #x5A #x3B #x10 #x17 #x54 #x5B #x1A #x72 #x73 #x6B
 #x2C #x66 #x49 #x1F #x24 #x13 #x6C #x37 #x2E #x3F #x4A #x5D #x0F

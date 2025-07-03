@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; elgamal.lisp -- implementation of the ElGamal encryption and signature scheme
 (in-package :crypto)
 

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; util.lisp -- functions that come in handy in crypto applications
-
 (in-package :crypto)
 
 (defun byte-array-to-hex-string (vector &key (start 0) end (element-type 'base-char))

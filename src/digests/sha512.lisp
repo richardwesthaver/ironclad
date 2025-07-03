@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;; sha512.lisp -- implementation of SHA-384/512 from NIST
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
@@ -115,9 +113,7 @@
              (:constructor %make-sha384-digest
               (&aux (regs (initial-sha384-regs))
                     (buffer (make-array 128 :element-type '(unsigned-byte 8)))))
-             (:copier nil))
-  ;; No slots.
-  )
+             (:copier nil)))
 
 (defmethod reinitialize-instance ((state sha512) &rest initargs)
   (declare (ignore initargs))

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; macro-utils.lisp -- things to make compiler macros easier
-
 (in-package :crypto)
 
 (defun quotationp (thing)
@@ -19,9 +17,7 @@
        (find-symbol (symbol-name symbol) ironclad))
       (t nil))))
 
-
 ;;; a few functions that are useful during compilation
-
 (defun make-circular-list (&rest elements)
   (let ((list (copy-seq elements)))
     (setf (cdr (last list)) list)))
@@ -36,9 +32,7 @@
         ((>= i length) subseq)
       (setf (first xsubseq) (first list)))))
 
-
 ;;; Partial evaluation helpers
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defun trivial-macroexpand-all (form env)
     "Trivial and very restricted code-walker used in partial evaluation macros.

@@ -1,4 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; hmac.lisp
 ;;; implementation of RFC 5869
 (in-package :crypto)
 

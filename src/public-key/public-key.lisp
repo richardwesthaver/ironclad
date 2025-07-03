@@ -1,16 +1,11 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; public-key.lisp -- implementation of common public key components
-
 (in-package :crypto)
-
 
 (defun list-all-key-pair-kinds ()
   (copy-list '(:curve25519 :curve448 :dsa :ed25519 :ed448 :elgamal
                :rsa :secp256k1 :secp256r1 :secp384r1 :secp521r1)))
 
-
 ;;; class definitions
-
 (defclass discrete-logarithm-group ()
   ((p :initarg :p :reader group-pval)
    (q :initarg :q :reader group-qval)
@@ -19,12 +14,9 @@
 
 ;;; Special variable to force the signature nonce during tests instead of
 ;;; generating a random one.
-
 (defparameter *signature-nonce-for-test* nil)
 
-
 ;;; converting from integers to octet vectors
-
 (defun octets-to-integer (octet-vec &key (start 0) end (big-endian t) n-bits)
   (declare (type (simple-array (unsigned-byte 8) (*)) octet-vec)
            (optimize (speed 3) (space 0) (safety 1) (debug 0)))

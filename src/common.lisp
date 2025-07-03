@@ -1,14 +1,15 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; common.lisp -- efficient implementations of mod32 arithmetic and macros
 
-;;; Functions in this file are intended to be fast
+;; Functions in this file are intended to be fast
+
+;;; Code:
 (in-package :crypto)
 
 (defmacro defconst (name value)
   `(defconstant ,name
-    (if (boundp ',name)
-        (symbol-value ',name)
-        ,value)))
+     (if (boundp ',name)
+         (symbol-value ',name)
+         ,value)))
 
 ;;; CMUCL and SBCL both have an internal type for this, but we'd like to
 ;;; be portable, so we define our own.
@@ -47,19 +48,17 @@
 #.(loop for i from 1 to 8
         collect (let ((name (intern (format nil  "~:@(~:R~)-~A"  i (string '#:byte)))))
                   `(progn
-                    (declaim (inline ,name))
-                    (declaim (ftype (function (unsigned-byte) (unsigned-byte 8)) ,name))
-                    (defun ,name (ub)
-                      (declare (type unsigned-byte ub))
-                      (ldb (byte 8 ,(* 8 (1- i))) ub)))) into forms
+                     (declaim (inline ,name))
+                     (declaim (ftype (function (unsigned-byte) (unsigned-byte 8)) ,name))
+                     (defun ,name (ub)
+                       (declare (type unsigned-byte ub))
+                       (ldb (byte 8 ,(* 8 (1- i))) ub)))) into forms
         finally (return `(progn ,@forms)))
 
 ;;; fetching/storing appropriately-sized integers from octet vectors
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
-(defun ubref-fun-name (bitsize big-endian-p)
-  (symbolicate '#:ub bitsize (if big-endian-p '#:ref/be '#:ref/le)))
-) ; EVAL-WHEN
+  (defun ubref-fun-name (bitsize big-endian-p)
+    (symbolicate '#:ub bitsize (if big-endian-p '#:ref/be '#:ref/le))))
 
 (declaim (inline ub16ref/le (setf ub16ref/le)
                  ub16ref/be (setf ub16ref/be)
@@ -339,7 +338,6 @@
   (sb-rotate-byte:rotate-byte (- s) (byte 64 0) a))
 
 ;;; 64-bit utilities
-
 (declaim #+ironclad-fast-mod32-arithmetic
          (inline %add-with-carry %subtract-with-borrow))
 
@@ -395,7 +393,7 @@ OFFSET into the given (UNSIGNED-BYTE 32) BLOCK."
         for j of-type (integer 0 #.array-dimension-limit)
         from offset to (+ offset 63) by 4
         do
-        (setf (aref block i) (ub32ref/le buffer j)))
+           (setf (aref block i) (ub32ref/le buffer j)))
   (values))
 
 (defun fill-block-ub8-be (block buffer offset)
@@ -458,11 +456,11 @@ behavior."
            #.(burn-baby-burn))
   (macrolet ((xor-bytes (size xor-form)
                `(loop until (< block-length ,size) do
-                  ,xor-form
-                  (incf output-block-start ,size)
-                  (incf input-block1-start ,size)
-                  (incf input-block2-start ,size)
-                  (decf block-length ,size))))
+                         ,xor-form
+                         (incf output-block-start ,size)
+                         (incf input-block1-start ,size)
+                         (incf input-block2-start ,size)
+                         (decf block-length ,size))))
     #+(and x86-64 ironclad-assembly)
     (xor-bytes 16 (xor128 input-block1 input-block1-start
                           input-block2 input-block2-start
@@ -493,9 +491,9 @@ behavior."
           (zerop (mod block-length 16)))
      (let ((i (gensym)))
        `(loop for ,i from 0 below ,block-length by 16 do
-          (xor128 ,input-block1 (+ ,input-block1-start ,i)
-                  ,input-block2 (+ ,input-block2-start ,i)
-                  ,output-block (+ ,output-block-start ,i)))))
+                 (xor128 ,input-block1 (+ ,input-block1-start ,i)
+                         ,input-block2 (+ ,input-block2-start ,i)
+                         ,output-block (+ ,output-block-start ,i)))))
     #+x86-64
     ((and (constantp block-length env)
           (= block-length 8))
@@ -513,9 +511,9 @@ behavior."
           (zerop (mod block-length 4)))
      (let ((i (gensym)))
        `(loop for ,i from 0 below ,block-length by 4 do
-          (setf (ub32ref/le ,output-block (+ ,output-block-start ,i))
-                (logxor (ub32ref/le ,input-block1 (+ ,input-block1-start ,i))
-                        (ub32ref/le ,input-block2 (+ ,input-block2-start ,i)))))))
+                 (setf (ub32ref/le ,output-block (+ ,output-block-start ,i))
+                       (logxor (ub32ref/le ,input-block1 (+ ,input-block1-start ,i))
+                               (ub32ref/le ,input-block2 (+ ,input-block2-start ,i)))))))
     (t
      form)))
 
@@ -525,10 +523,10 @@ behavior."
            #.(burn-baby-burn))
   (macrolet ((copy-bytes (size copy-form)
                `(loop until (< block-length ,size) do
-                      ,copy-form
-                      (incf input-block-start ,size)
-                      (incf output-block-start ,size)
-                      (decf block-length ,size))))
+                         ,copy-form
+                         (incf input-block-start ,size)
+                         (incf output-block-start ,size)
+                         (decf block-length ,size))))
     #+(and x86-64 ironclad-assembly)
     (copy-bytes 16 (mov128 input-block input-block-start
                            output-block output-block-start))
@@ -543,9 +541,9 @@ behavior."
              :start2 input-block-start :end2 (+ input-block-start block-length))))
 
 (define-compiler-macro copy-block (&whole form &environment env
-                                          block-length
-                                          input-block input-block-start
-                                          output-block output-block-start)
+                                               block-length
+                                               input-block input-block-start
+                                               output-block output-block-start)
   (declare (ignorable env block-length input-block input-block-start output-block output-block-start))
   (cond
     #+(and x86-64 ironclad-assembly)
@@ -558,8 +556,8 @@ behavior."
           (zerop (mod block-length 16)))
      (let ((i (gensym)))
        `(loop for ,i from 0 below ,block-length by 16 do
-          (mov128 ,input-block (+ ,input-block-start ,i)
-                  ,output-block (+ ,output-block-start ,i)))))
+                 (mov128 ,input-block (+ ,input-block-start ,i)
+                         ,output-block (+ ,output-block-start ,i)))))
     #+x86-64
     ((and (constantp block-length env)
           (= block-length 8))
@@ -575,7 +573,7 @@ behavior."
           (zerop (mod block-length 4)))
      (let ((i (gensym)))
        `(loop for ,i from 0 below ,block-length by 4 do
-          (setf (ub32ref/le ,output-block (+ ,output-block-start ,i))
-                (ub32ref/le ,input-block (+ ,input-block-start ,i))))))
+                 (setf (ub32ref/le ,output-block (+ ,output-block-start ,i))
+                       (ub32ref/le ,input-block (+ ,input-block-start ,i))))))
     (t
      form)))

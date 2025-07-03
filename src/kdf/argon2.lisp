@@ -1,11 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; argon2.lisp -- implementation of the Argon2 key derivation function
-
-;;; Based on the Argon2 implementation present in the Monocypher
-;;; crypto library (http://loup-vaillant.fr/projects/monocypher/)
-
+;; Based on the Argon2 implementation present in the Monocypher
+;; crypto library (http://loup-vaillant.fr/projects/monocypher/)
 (in-package :crypto)
-
 
 (defclass argon2 ()
   ((block :accessor argon2-block :type (simple-array (unsigned-byte 64) (128)))

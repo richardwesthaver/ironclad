@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; fortuna.lisp -- Fortuna PRNG
 (in-package :crypto)
 

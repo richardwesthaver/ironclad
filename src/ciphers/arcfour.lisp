@@ -1,13 +1,9 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; arcfour.lisp -- implementation of the alleged RC4 stream cipher
-
 (in-package :crypto)
-
 ;;; This is a rewrite of a C program by Christophe Devine.  Thanks,
 ;;; Mr. Devine.  This version is Copyright (C) 2005 Tim Daly Jr.
 ;;;
 ;;; Code modified for Ironclad by Nathan Froyd.
-
 (deftype arcfour-sbox () '(simple-array (unsigned-byte 8) (256)))
 
 (defclass arcfour (stream-cipher)

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; crc32.lisp
-
 (in-package :crypto)
 (in-ironclad-readtable)
 

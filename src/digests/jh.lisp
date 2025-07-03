@@ -1,19 +1,12 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; jh.lisp -- implementation of the JH hash function
-
 (in-package :crypto)
 
-
-;;;
 ;;; Parameters
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +jh-rounds+ 42)
   (defconstant +jh-block-size+ 64)
 
 ;;; Initial hash values
-
   (defconst +jh224-h0+
     (make-array 16
                 :element-type '(unsigned-byte 64)
@@ -63,7 +56,6 @@
                                     #xfb1785e6dffcc2e3 #x4bdd8ccc78465a54)))
 
 ;;; Round constants
-
   (defconst +jh-round-constants+
     (make-array 168
                 :element-type '(unsigned-byte 64)
@@ -152,11 +144,7 @@
                                     #x701541db3198b435 #x9b54cdedbb0f1eea
                                     #x72409751a163d09a #xe26f4791bf9d75f6))))
 
-
-;;;
 ;;; Transformations
-;;;
-
 (defmacro jh-swap-1 (x)
   "Swapping bit 2i with bit 2i+1 of 64-bit X."
   `(setf ,x (logior (ash (logand ,x #x5555555555555555) 1)
@@ -227,11 +215,7 @@
          ,m2 (logxor ,m2 ,t0)
          ,m6 (logxor ,m6 ,t1)))
 
-
-;;;
 ;;; Rounds
-;;;
-
 (declaim (ftype (function ((simple-array (unsigned-byte 64) (16)))) jh-e8))
 (defun jh-e8 (s)
   "The bijective function."
@@ -367,11 +351,7 @@
 
     (values)))
 
-
-;;;
 ;;; Digest structures and functions
-;;;
-
 (defstruct (jh
             (:constructor %make-jh-digest nil)
             (:copier nil))

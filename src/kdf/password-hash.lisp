@@ -1,4 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; password-hash.lisp
 (in-package :crypto)
 
 (defun make-random-salt (&optional (size 16))

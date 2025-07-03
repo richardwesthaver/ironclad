@@ -1,12 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; secp256k1.lisp -- secp256k1 elliptic curve
-
 
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass secp256k1-public-key ()
   ((y :initarg :y :reader secp256k1-key-y :type (simple-array (unsigned-byte 8) (*)))))
 
@@ -25,9 +21,7 @@
     (declare (ignore env))
     (make-load-form-saving-slots p)))
 
-
 ;;; constant and function definitions
-
 (defconstant +secp256k1-bits+ 256)
 (defconstant +secp256k1-p+ 115792089237316195423570985008687907853269984665640564039457584007908834671663)
 (defconstant +secp256k1-b+ 7)
@@ -36,12 +30,11 @@
 
 (defconst +secp256k1-g+
   (make-instance 'secp256k1-point
-                 :x 55066263022277343669578718895168534326250603453777594175500187360389116729240
-                 :y 32670510020758816978083085130507043184471273380659243275938904335757337482424
-                 :z 1))
+    :x 55066263022277343669578718895168534326250603453777594175500187360389116729240
+    :y 32670510020758816978083085130507043184471273380659243275938904335757337482424
+    :z 1))
 (defconst +secp256k1-point-at-infinity+
   (make-instance 'secp256k1-point :x 1 :y 1 :z 0))
-
 
 (defmethod ec-scalar-inv ((kind (eql :secp256k1)) n)
   (expt-mod n (- +secp256k1-p+ 2) +secp256k1-p+))

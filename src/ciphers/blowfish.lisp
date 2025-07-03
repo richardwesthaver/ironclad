@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; blowfish.lisp -- implementation of Bruce Schneier's Blowfish block cipher
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
@@ -324,8 +322,7 @@
     (initialize-blowfish-vectors key p-array s-boxes)
     (setf (p-array cipher) p-array
           (s-boxes cipher) s-boxes)
-    cipher))
-) ; MACROLET
+    cipher)))
 
 (defcipher blowfish
   (:encrypt-function blowfish-encrypt-block)

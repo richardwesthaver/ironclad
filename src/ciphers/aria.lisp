@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; aria.lisp - implementation of the ARIA block cipher
-
 (in-package :crypto)
-
 
 (defconst +aria-s1+
   (make-array 256

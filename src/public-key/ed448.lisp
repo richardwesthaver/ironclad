@@ -1,11 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; ed448.lisp -- implementation of the ed448 signature algorithm
-
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass ed448-public-key ()
   ((y :initarg :y :reader ed448-key-y :type (simple-array (unsigned-byte 8) (*)))))
 
@@ -24,9 +20,7 @@
     (declare (ignore env))
     (make-load-form-saving-slots p)))
 
-
 ;;; constant and function definitions
-
 (defconstant +ed448-bits+ 456)
 (defconstant +ed448-q+ 726838724295606890549323807888004534353641360687318060281490199180612328166730772686396383698676545930088884461843637361053498018365439)
 (defconstant +ed448-l+ 181709681073901722637330951972001133588410340171829515070372549795146003961539585716195755291692375963310293709091662304773755859649779)
@@ -39,7 +33,6 @@
                  :z 1))
 (defconst +ed448-point-at-infinity+
   (make-instance 'ed448-point :x 0 :y 1 :z 1))
-
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defun ed448-dom (x y)

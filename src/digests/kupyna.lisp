@@ -1,23 +1,13 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; kupyna.lisp -- implementation of the Kupyna hash functions (DSTU 7564:2014)
-
 (in-package :crypto)
 
-
-;;;
 ;;; Constants
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconst +kupyna-t+ +kalyna-t+))
 
 (declaim (type (simple-array (unsigned-byte 64) (8 256)) +kupyna-t+))
 
-
-;;;
 ;;; Rounds for 256-bit output
-;;;
-
 (declaim (inline kupyna-g256))
 (defun kupyna-g256 (x y)
   (declare (type (simple-array (unsigned-byte 64) (*)) x y)
@@ -112,11 +102,7 @@
       (setf (aref h i) (logxor (aref h i) (aref ap1 i) (aref aq1 i)))))
   (values))
 
-
-;;;
 ;;; Rounds for 512-bit output
-;;;
-
 (declaim (inline kupyna-g512))
 (defun kupyna-g512 (x y)
   (declare (type (simple-array (unsigned-byte 64) (*)) x y)
@@ -235,11 +221,7 @@
       (setf (aref h i) (logxor (aref h i) (aref ap1 i) (aref aq1 i)))))
   (values))
 
-
-;;;
 ;;; Digest structures and functions
-;;;
-
 (defstruct (kupyna
             (:constructor %make-kupyna-digest nil)
             (:copier nil))

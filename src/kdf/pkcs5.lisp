@@ -1,9 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; pkcs5.lisp
 (in-package :crypto)
 
-
 ;;; PBKDF1 from RFC 2898, section 5.1
-
 (defclass pbkdf1 ()
   ((digest :reader kdf-digest)))
 
@@ -50,9 +48,7 @@
      finally
        (return (subseq key 0 (min key-length (length key))))))
 
-
 ;;; PBKDF2, from RFC 2898, section 5.2
-
 (defclass pbkdf2 ()
   ((digest-name :initarg :digest :reader kdf-digest)))
 

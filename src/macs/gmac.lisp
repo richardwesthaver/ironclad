@@ -1,10 +1,6 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; gmac.lisp -- GMAC message authentication code
-
 ;; See nistspecialpublication800-38d.pdf about GCM and GMAC.
-
 (in-package :crypto)
-
 
 (defclass gmac (mac)
   ((accumulator :accessor gmac-accumulator

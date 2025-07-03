@@ -1,11 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; ed25519.lisp -- implementation of the ed25519 signature algorithm
-
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass ed25519-public-key ()
   ((y :initarg :y :reader ed25519-key-y :type (simple-array (unsigned-byte 8) (*)))))
 
@@ -25,9 +21,7 @@
     (declare (ignore env))
     (make-load-form-saving-slots p)))
 
-
 ;;; constant, variable and function definitions
-
 (defconstant +ed25519-bits+ 256)
 (defconstant +ed25519-q+ 57896044618658097711785492504343953926634992332820282019728792003956564819949)
 (defconstant +ed25519-l+ 7237005577332262213973186563042994240857116359379907606001950938285454250989)
@@ -42,7 +36,6 @@
                  :w 46827403850823179245072216630277197565144205554125654976674165829533817101731))
 (defconst +ed25519-point-at-infinity+
   (make-instance 'ed25519-point :x 0 :y 1 :z 1 :w 0))
-
 
 (defmethod ec-scalar-inv ((kind (eql :ed25519)) n)
   (expt-mod n (- +ed25519-q+ 2) +ed25519-q+))

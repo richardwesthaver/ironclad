@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;; salsa20.lisp --implementation of the Salsa20 stream cipher
-
 (in-package :crypto)
 
 (declaim (type (simple-octet-vector 16) salsa20-sigma salsa20-tau))

@@ -1,10 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; xor.lisp -- the do-nothing cipher
 
 ;;; It's not very secure, but it does come in handy to serve as a dummy
 ;;; cipher in security protocols before ciphers and keys have been
 ;;; established.
-
 (cl:in-package :crypto)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)

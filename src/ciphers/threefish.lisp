@@ -1,16 +1,10 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; threefish.lisp -- implementation of the Threefish block cipher
-
 (in-package :crypto)
 
-
 ;;; Constants
-
 (defconstant +threefish-key-schedule-constant+ #x1bd11bdaa9fc1a22)
 
-
 ;;; Functions common to all the block sizes
-
 (defun threefish-set-key (cipher key-data)
   (let* ((key-words (/ (block-length cipher) 8))
          (key (make-array (1+ key-words)
@@ -33,9 +27,7 @@
           (aref tweak 1) (ub64ref/le tweak-data 8)
           (aref tweak 2) (logxor (aref tweak 0) (aref tweak 1)))))
 
-
 ;;; Implementation for blocks of 256 bits
-
 (defclass threefish256 (cipher 32-byte-block-mixin)
   ((key :accessor threefish-key
         :type (simple-array (unsigned-byte 64) (5)))
@@ -220,9 +212,7 @@
   (:block-length 32)
   (:key-length (:fixed 32)))
 
-
 ;;; Implementation for blocks of 512 bits
-
 (defclass threefish512 (cipher 64-byte-block-mixin)
   ((key :accessor threefish-key
         :type (simple-array (unsigned-byte 64) (9)))
@@ -495,9 +485,7 @@
   (:block-length 64)
   (:key-length (:fixed 64)))
 
-
 ;;; Implementation for blocks of 1024 bits
-
 (defclass threefish1024 (cipher 128-byte-block-mixin)
   ((key :accessor threefish-key
         :type (simple-array (unsigned-byte 64) (17)))

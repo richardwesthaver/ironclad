@@ -1,9 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
-
+;;;; cpu-features.lisp
 (in-package :crypto)
 
 ;;; Check what features are supported by the CPU
-
 #+x86-64
 (sb-ext:defglobal aes-ni-support-known-p nil)
 #+x86-64

@@ -1,13 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; blake2s.lisp -- implementation of the BLAKE2s hash function (RFC 7693)
-
 (in-package :crypto)
 
-
-;;;
 ;;; Parameters
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +blake2s-rounds+ 10)
   (defconstant +blake2s-block-size+ 64)
@@ -49,10 +43,7 @@
     state))
 
 
-;;;
 ;;; Blake2s rounds
-;;;
-
 (declaim (ftype (function ((simple-array (unsigned-byte 32) (8))
                            (simple-array (unsigned-byte 8) (*))
                            fixnum
@@ -142,11 +133,7 @@
 
   (values))
 
-
-;;;
 ;;; Digest structures and functions
-;;;
-
 (defstruct (blake2s
              (:constructor %make-blake2s-digest nil)
              (:copier nil))

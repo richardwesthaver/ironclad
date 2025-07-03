@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; conditions.lisp -- various error conditions
-
 (in-package :ironclad)
 
 (define-condition ironclad-error (simple-error)

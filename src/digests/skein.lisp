@@ -1,12 +1,9 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; skein.lisp -- implementation of the Skein hash functions
 
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
 ;;; Parameter identifiers
-
 (defconstant +skein-key+ 0)
 (defconstant +skein-cfg+ 4)
 (defconstant +skein-prs+ 8)
@@ -16,9 +13,7 @@
 (defconstant +skein-msg+ 48)
 (defconstant +skein-out+ 63)
 
-
 ;;; Initial values
-
 (declaim (type (simple-array (unsigned-byte 8) (32))
                +skein256-iv-128+ +skein256-iv-160+ +skein256-iv-224+
                +skein256-iv-256+))
@@ -162,7 +157,6 @@
             (512 +skein1024-iv-512+)
             (1024 +skein1024-iv-1024+)))))
 
-
 ;;; Functions to generate and update the tweak
 
 ;;; This function is called a lot by skein-ubi,
@@ -221,9 +215,7 @@
           (integer-to-octets output-length :n-bits 64 :big-endian nil))
     cfg))
 
-
 ;;; UBI (unique block iteration chaining)
-
 (defgeneric skein-value (state))
 (defgeneric skein-tweak (state))
 (defgeneric skein-cfg (state))
@@ -377,9 +369,7 @@
     (setf (threefish-tweak copy) (copy-seq (threefish-tweak cipher)))
     copy))
 
-
 ;;; Implementation for blocks of 256 bits
-
 (defstruct (skein256
              (:constructor %make-skein256-digest nil)
              (:copier nil))
@@ -509,9 +499,7 @@
 (defdigest skein256/160 :digest-length 20 :block-length 32)
 (defdigest skein256/224 :digest-length 28 :block-length 32)
 
-
 ;;; Implementation for blocks of 512 bits
-
 (defstruct (skein512
              (:constructor %make-skein512-digest nil)
              (:copier nil))
@@ -675,9 +663,7 @@
 (defdigest skein512/256 :digest-length 32 :block-length 64)
 (defdigest skein512/384 :digest-length 48 :block-length 64)
 
-
 ;;; Implementation for blocks of 1024 bits
-
 (defstruct (skein1024
              (:constructor %make-skein1024-digest nil)
              (:copier nil))

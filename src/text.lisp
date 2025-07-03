@@ -1,7 +1,4 @@
-;;;; -*- mode: lisp, indent-tabs-mode: nil -*-
-;;;;
 ;;;; text.lisp -- convenience functions for text handling
-
 (in-package :ironclad)
 
 (defun execute-with-digesting-text-stream (digest format fn)

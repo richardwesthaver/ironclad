@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; This file implements The MD5 Message-Digest Algorithm, as defined in
 ;;;; RFC 1321 by R. Rivest, published April 1992.
 ;;;;
@@ -33,7 +32,6 @@
 ;;;; of this software.
 (in-package :crypto)
 
-#-ironclad-md5-lispworks-int32
 (eval-when (:compile-toplevel :load-toplevel :execute)
   ;;; Section 3.4:  Table T
   (defparameter *t* (make-array 64 :element-type '(unsigned-byte 32)
@@ -44,10 +42,8 @@
                                        (* 4294967296
                                           (abs (sin (float i 0.0d0)))))))))
 
-#-ironclad-md5-lispworks-int32
 (progn
 ;;; This PROGN covers the rest of the file.
-;;; Lispworks implementation of MD5 in md5-lispworks-int32.lisp.
 
 ;;; Section 3.3:  (Initial) MD5 Working Set
 

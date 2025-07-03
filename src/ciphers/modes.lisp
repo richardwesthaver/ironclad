@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; modes.lisp -- using encryption modes with block ciphers
-
 (in-package :crypto)
 
 (defclass encryption-mode ()
@@ -589,9 +587,7 @@
               (let ((n-bytes-processed (max 0 length)))
                 (values n-bytes-processed n-bytes-processed))))))
     (values (stream-crypt-function (encrypt-function cipher))
-            (stream-crypt-function (decrypt-function cipher)))))
-
-) ; DEFINE-MODE-FUNCTION MACROLET
+            (stream-crypt-function (decrypt-function cipher))))))
 
 (defmethod encrypted-message-length (context
                                      (mode stream-mode) length

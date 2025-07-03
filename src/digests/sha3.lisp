@@ -1,13 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; sha3.lisp -- implementation of SHA-3 from NIST
-
 (in-package :crypto)
 
-
-;;;
 ;;; Keccak state and parameters
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +keccak-state-columns+ 5)
   (defconstant +keccak-state-rows+ 5)
@@ -80,11 +74,7 @@
   (declare (optimize (speed 3) (space 0) (safety 0) (debug 0)))
   (make-array #.+keccak-state-lanes+ :element-type 'keccak-lane :initial-element 0))
 
-
-;;;
 ;;; Transforming linear input/output to state array
-;;;
-
 (defun keccak-state-merge-input (state bit-rate input start)
   (declare (type keccak-state state)
            (type (integer 0 1600) bit-rate)
@@ -121,11 +111,7 @@
                            value (ash value -8)))))))
     digest))
 
-
-;;;
 ;;; Keccak rounds
-;;;
-
 (defmacro with-keccak-state-accessors ((&rest states) &body body)
   "Bind the contents of the state(s) array(s) to local variables, and save
 the content on normal form exit."
@@ -241,11 +227,7 @@ the content on normal form exit."
                                                (get-keccak-round-constant i)))))))
   (values))
 
-
-;;;
 ;;; Message Padding for last block
-;;;
-
 (defun pad-message-to-width (message bit-width padding-type)
   (let* ((message-byte-length (length message))
          (width-bytes (truncate bit-width 8))
@@ -263,11 +245,7 @@ the content on normal form exit."
           (logior #x80 (aref padded-message (1- padded-message-byte-length))))
     padded-message))
 
-
-;;;
 ;;; SHA-3
-;;;
-
 (defstruct (sha3
              (:constructor %make-sha3-digest nil)
              (:copier nil))

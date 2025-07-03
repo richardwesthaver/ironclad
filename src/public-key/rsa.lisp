@@ -1,10 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; rsa.lisp -- implementation of the RSA public key algorithm
-
 (in-package :crypto)
 
 ;;; class definitions
-
 (defclass rsa-key ()
   ((n :initarg :n :reader rsa-key-modulus :type integer)))
 
@@ -17,7 +14,6 @@
    (q :initarg :q :reader rsa-key-prime-q :type integer)))
 
 ;;; function definitions
-
 (defmethod make-public-key ((kind (eql :rsa))
                             &key e n &allow-other-keys)
   (unless e

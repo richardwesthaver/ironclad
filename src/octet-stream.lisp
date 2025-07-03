@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; octet-stream.lisp -- like string-streams, but with (VECTOR (UNSIGNED-BYTE 8))
 (in-package :crypto)
 
@@ -7,7 +6,6 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
 (defvar *binary-input-stream-class*
   (quote sb-gray:fundamental-binary-input-stream))
-   
 
 (defvar *binary-output-stream-class*
   (quote
@@ -50,7 +48,6 @@
 
 ;;; These could be specialized for particular implementations by hooking
 ;;; in directly to the "native" stream methods for the implementation.
-
 (defclass octet-stream ()
   ((buffer :accessor buffer :initarg :buffer :type simple-octet-vector)))
 
@@ -382,7 +379,6 @@ of a string output-stream."
       (incf start n))
     seq))
 
-
 (defmacro with-encrypting-stream ((var stream cipher mode key
                                    &key initialization-vector (direction :output))
                                   &body body)
@@ -399,9 +395,7 @@ of a string output-stream."
                                                    :direction ,direction))
      ,@body))
 
-
 ;;; authenticating streams
-
 (defclass authenticating-stream (#.*binary-output-stream-class*)
   ((mac :initarg :mac :reader stream-mac)
    (buffer :initform (make-array 64 :element-type '(unsigned-byte 8)) :reader stream-buffer)

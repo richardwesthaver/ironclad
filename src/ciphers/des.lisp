@@ -1,15 +1,12 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; des.lisp -- implementation of DES
 
 ;;; converted from the C code appearing in _Applied Cryptography_ by
 ;;; Bruce Schneier to Common Lisp.  Unfortunately, a lot of C-isms
 ;;; remain, so this is not the prettiest Common Lisp code ever.
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
 ;;; the sboxes of DES
-
 (declaim (type (simple-array (unsigned-byte 32) (64))
                des-sbox0 des-sbox1 des-sbox2 des-sbox3
                des-sbox4 des-sbox5 des-sbox6 des-sbox7))

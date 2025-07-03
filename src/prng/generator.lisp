@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; generator.lisp -- Fortuna PRNG generator
 (in-package :crypto)
 

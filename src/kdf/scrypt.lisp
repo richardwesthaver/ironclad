@@ -1,4 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; scrypt.lisp
 (in-package :crypto)
 
 ;;; scrypt from Colin Percival's

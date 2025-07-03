@@ -1,13 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; kalyna.lisp -- implementation of the Kalyna block ciphers (DSTU 7624:2014)
-
 (in-package :crypto)
 
-
-;;;
 ;;; Constants
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconst +kalyna-t+
     (make-array '(8 256)
@@ -2702,11 +2696,7 @@
   (:block-length 16)
   (:key-length (:fixed 16 32)))
 
-
-;;;
 ;;; Kalyna256
-;;;
-
 (declaim (inline kalyna-g0256))
 (defun kalyna-g0256 (x y)
   (declare (type (simple-array (unsigned-byte 64) (*)) x y)
@@ -3092,11 +3082,7 @@
   (:block-length 32)
   (:key-length (:fixed 32 64)))
 
-
-;;;
 ;;; Kalyna512
-;;;
-
 (declaim (inline kalyna-g0512))
 (defun kalyna-g0512 (x y)
   (declare (type (simple-array (unsigned-byte 64) (*)) x y)

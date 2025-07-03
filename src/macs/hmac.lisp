@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; hmac.lisp -- RFC 2104 keyed hashing for message authentication
-
 (in-package :crypto)
 
 (defclass hmac (mac)

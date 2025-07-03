@@ -1,8 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; tree-hash.lisp
 (in-package :crypto)
 ;;; See the spec at
 ;;; http://zgp.org/pipermail/p2p-hackers/2002-June/000621.html
-
 (defparameter *leaf-byte* (make-array 1 :element-type '(unsigned-byte 8)
                                       :initial-element 0))
 (defparameter *internal-byte* (make-array 1 :element-type '(unsigned-byte 8)

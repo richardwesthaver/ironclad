@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; xchacha.lisp -- implementation of the XChacha stream cipher
-
 (in-package :crypto)
 
 (defclass xchacha (chacha)

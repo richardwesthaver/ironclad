@@ -1,9 +1,6 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; poly1305.lisp -- RFC 7539 poly1305 message authentication code
 
-
 (in-package :crypto)
-
 
 (defclass poly1305 (mac)
   ((accumulator :accessor poly1305-accumulator

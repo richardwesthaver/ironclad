@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; ripemd-160.lisp -- the RIPEMD-160 digest function
 
 (in-package :crypto)

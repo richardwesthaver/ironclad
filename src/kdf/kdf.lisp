@@ -1,7 +1,6 @@
 ;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 (in-package :crypto)
 
-
 (defun list-all-kdfs ()
   (copy-list '(:argon2i :argon2d :bcrypt :bcrypt-pbkdf
                :hmac-kdf :pbkdf1 :pbkdf2 :scrypt-kdf)))

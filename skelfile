@@ -5,3 +5,7 @@
 :vc (:hg "https://vc.compiler.company/ext/ironclad"
      (upstream (:git "https://github.com/sharplispers/ironclad"))
      (gh (:git "ssh://git@github.com/richardwesthaver/ironclad")))
+:rules
+((default () (with-sbcl (:noinform t :quit t) (asdf:load-system :ironclad)))
+ (clean () #$rm -rf ./**.fasl$#))
+  

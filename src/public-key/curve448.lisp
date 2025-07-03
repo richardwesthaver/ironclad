@@ -1,11 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; curve448.lisp -- implementation of the curve448 Diffie-Hellman function
-
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass curve448-public-key ()
   ((y :initarg :y :reader curve448-key-y :type (simple-array (unsigned-byte 8) (*)))))
 
@@ -23,16 +19,13 @@
     (declare (ignore env))
     (make-load-form-saving-slots p)))
 
-
 ;;; constants and function definitions
-
 (defconstant +curve448-bits+ 448)
 (defconstant +curve448-p+ 726838724295606890549323807888004534353641360687318060281490199180612328166730772686396383698676545930088884461843637361053498018365439)
 (defconstant +curve448-a24+ 39081)
 
 (defconst +curve448-g+
   (make-instance 'curve448-point :x 5 :z 1))
-
 
 (defmethod ec-scalar-inv ((kind (eql :curve448)) n)
   (expt-mod n (- +curve448-p+ 2) +curve448-p+))

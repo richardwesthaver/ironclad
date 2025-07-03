@@ -1,4 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; package.lisp --- Ironclad Packages
 (cl:defpackage :ironclad
   (:use :cl)
   (:nicknames :crypto)
@@ -208,14 +208,13 @@
 (in-package :crypto)
 
 ;;; easy-to-type readmacro for creating s-boxes and the like
-
 (defun array-reader (stream subchar arg)
   (declare (ignore subchar))
   (let ((array-data (read stream nil stream nil))
         (array-element-type `(unsigned-byte ,arg)))
     ;; FIXME: need to make this work for multi-dimensional arrays
     `(make-array ,(length array-data) :element-type ',array-element-type
-                :initial-contents ',array-data)))
+                                      :initial-contents ',array-data)))
 
 (defparameter *ironclad-readtable*
   (let ((readtable (copy-readtable nil)))

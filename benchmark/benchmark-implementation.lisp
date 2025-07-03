@@ -172,4 +172,4 @@
 (with-open-file (file *implementation-result-file* :direction :output :if-exists :supersede)
   (write *result* :stream file))
 
-(uiop:quit)
+(sb-ext:quit)

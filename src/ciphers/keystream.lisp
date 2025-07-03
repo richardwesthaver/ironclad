@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; keystream.lisp
-
 (in-package :crypto)
-
 
 (defun keystream-position (cipher &optional position)
   "Return or change the current POSITION within the key stream of a CIPHER."

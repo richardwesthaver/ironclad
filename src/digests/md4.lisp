@@ -1,13 +1,12 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; md4.lisp -- the MD4 digest algorithm as given in RFC1320
 
 (in-package :crypto)
 
 (define-digest-registers (md4 :endian :little)
-  (a #x67452301)
-  (b #xefcdab89)
-  (c #x98badcfe)
-  (d #x10325476))
+                         (a #x67452301)
+                         (b #xefcdab89)
+                         (c #x98badcfe)
+                         (d #x10325476))
 
 (defconst +pristine-md4-registers+ (initial-md4-regs))
 
@@ -61,10 +60,10 @@
         regs))))
 
 (defstruct (md4
-             (:constructor %make-md4-digest nil)
-             (:constructor %make-md4-state (regs amount block buffer buffer-index))
-             (:copier nil)
-             (:include mdx))
+            (:constructor %make-md4-digest nil)
+            (:constructor %make-md4-state (regs amount block buffer buffer-index))
+            (:copier nil)
+            (:include mdx))
   (regs (initial-md4-regs) :type md4-regs :read-only t)
   (block (make-array 16 :element-type '(unsigned-byte 32))
     :type (simple-array (unsigned-byte 32) (16)) :read-only t))
@@ -125,15 +124,15 @@ FINALIZE-MD4-STATE results in unspecified behaviour."
     (setf (aref buffer buffer-index) #x80)
     ;; Fill with 0 bit padding
     (loop for index of-type (integer 0 64)
-       from (1+ buffer-index) below 64
-       do (setf (aref buffer index) #x00))
+          from (1+ buffer-index) below 64
+          do (setf (aref buffer index) #x00))
     (fill-block-ub8-le block buffer 0)
     ;; Flush block first if length wouldn't fit
     (when (>= buffer-index 56)
       (update-md4-block regs block)
       ;; Create new fully 0 padded block
       (loop for index of-type (integer 0 16) from 0 below 16
-         do (setf (aref block index) #x00000000)))
+            do (setf (aref block index) #x00000000)))
     ;; Add 64bit message bit length
     (store-data-length block total-length 14)
     ;; Flush last block

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;; cmac.lisp -- The CMAC algorithm from NIST 800-38B.
-
 (in-package :crypto)
 
 (defclass cmac (mac)

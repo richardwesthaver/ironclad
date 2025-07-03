@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; sha256.lisp -- implementation of SHA-2/256 from NIST
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
@@ -119,9 +117,7 @@
 (defstruct (sha224
              (:include sha256)
              (:constructor %make-sha224-digest (&aux (regs (initial-sha224-regs))))
-             (:copier nil))
-  ;; No slots.
-  )
+             (:copier nil)))
 
 (defmethod reinitialize-instance ((state sha256) &rest initargs)
   (declare (ignore initargs))

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; digest.lisp -- common functions for hashing
-
 (in-package :crypto)
 
 ;;; defining digest (hash) functions
@@ -16,10 +14,10 @@
      (flet ((frob (read-buffer start end)
               (loop for last-updated = (read-sequence read-buffer stream
                                                       :start start :end end)
-                 do (update-digest digest read-buffer
-                                   :start start :end last-updated)
-                 until (< last-updated end)
-                 finally (return digest))))
+                    do (update-digest digest read-buffer
+                                      :start start :end last-updated)
+                    until (< last-updated end)
+                    finally (return digest))))
        (if buffer
            (frob buffer start (or end (length buffer)))
            (let ((buffer (make-array +buffer-size+ :element-type '(unsigned-byte 8))))
@@ -38,8 +36,8 @@
   (declare (type (vector (unsigned-byte 8)) vector)
            (type index start end))
   (sb-kernel:with-array-data ((data vector) (real-start start) (real-end end))
-   (declare (ignore real-end))
-   (update-digest digest data :start real-start :end (+ real-start (- end start)))))
+    (declare (ignore real-end))
+    (update-digest digest data :start real-start :end (+ real-start (- end start)))))
 
 ;;; Storing a length at the end of the hashed data is very common and
 ;;; can be a small bottleneck when generating lots of hashes over small
@@ -81,9 +79,9 @@
     `(progn
        (eval-when (:compile-toplevel :load-toplevel :execute)
          (defstruct (,struct-name
-                      (:type (vector (unsigned-byte ,register-bit-size)))
-                      (:constructor ,constructor ())
-                      (:copier ,copier))
+                     (:type (vector (unsigned-byte ,register-bit-size)))
+                     (:constructor ,constructor ())
+                     (:copier ,copier))
            ,@registers)
          ;; Some versions of LispWorks incorrectly define STRUCT-NAME as
          ;; a type with DEFSTRUCT, so avoid gratuitous warnings.
@@ -101,25 +99,25 @@
                                  nconc `((,ref-fun buffer (+ start ,index))
                                          (,(symbolicate digest-name '#:-regs- reg)
                                           regs))))))
-               (cond
-                 #+little-endian
-                 ((eq endian :little)
-                  `(if (and (= start 0) (<= ,register-bit-size sb-vm:n-word-bits))
-                       (sb-kernel:ub8-bash-copy regs 0 buffer 0 ,digest-size)
-                       ,inlined-unpacking))
-                 #+big-endian
-                 ((eq endian :big)
-                  `(if (and (= start 0) (<= ,register-bit-size sb-vm:n-word-bits))
-                       (sb-kernel:ub8-bash-copy regs 0 buffer 0 ,digest-size)
-                       ,inlined-unpacking))
-                 (t inlined-unpacking)))
+            (cond
+              #+little-endian
+              ((eq endian :little)
+               `(if (and (= start 0) (<= ,register-bit-size sb-vm:n-word-bits))
+                    (sb-kernel:ub8-bash-copy regs 0 buffer 0 ,digest-size)
+                    ,inlined-unpacking))
+              #+big-endian
+              ((eq endian :big)
+               `(if (and (= start 0) (<= ,register-bit-size sb-vm:n-word-bits))
+                    (sb-kernel:ub8-bash-copy regs 0 buffer 0 ,digest-size)
+                    ,inlined-unpacking))
+              (t inlined-unpacking)))
          buffer))))
 
 (defmacro define-digest-updater (digest-name &body body)
   (destructuring-bind (maybe-doc-string &rest rest) body
     `(defmethod update-digest ((state ,digest-name) (sequence vector) &key (start 0) (end (length sequence)))
        ,@(when (stringp maybe-doc-string)
-               `(,maybe-doc-string))
+           `(,maybe-doc-string))
        ,(hold-me-back)
        (check-type sequence simple-octet-vector)
        (check-type start index)
@@ -186,8 +184,8 @@
 
 ;;; common superclass (superstructure?) for MD5-style digest functions
 (defstruct (mdx
-             (:constructor nil)
-             (:copier nil))
+            (:constructor nil)
+            (:copier nil))
   ;; This is technically an (UNSIGNED-BYTE 61).  But the type-checking
   ;; penalties that imposes on a good 32-bit implementation are
   ;; significant.  We've opted to omit the type declaration here.  If
@@ -197,7 +195,7 @@
   ;; Most "64-bit" digest functions (e.g. SHA512) will need to override
   ;; this initial value in an &AUX.
   (buffer (make-array 64 :element-type '(unsigned-byte 8)) :read-only t
-   :type simple-octet-vector)
+                                                           :type simple-octet-vector)
   ;; This fixed type should be big enough for "64-bit" digest functions.
   (buffer-index 0 :type (integer 0 128)))
 
@@ -251,10 +249,10 @@
   (apply #'digest-file (make-digest digest-name) pathname kwargs))
 
 (defmethod digest-file (state pathname &key buffer (start 0) end
-                        digest (digest-start 0))
+                                            digest (digest-start 0))
   (with-open-file (stream pathname :element-type '(unsigned-byte 8)
-                          :direction :input
-                          :if-does-not-exist :error)
+                                   :direction :input
+                                   :if-does-not-exist :error)
     (update-digest-from-stream state stream
                                :buffer buffer :start start :end end)
     (produce-digest state :digest digest :digest-start digest-start)))
@@ -265,16 +263,16 @@
   (apply #'digest-stream (make-digest digest-name) stream kwargs))
 
 (defmethod digest-stream (state stream &key buffer (start 0) end
-                          digest (digest-start 0))
+                                            digest (digest-start 0))
   (update-digest-from-stream state stream
-                               :buffer buffer :start start :end end)
+                             :buffer buffer :start start :end end)
   (produce-digest state :digest digest :digest-start digest-start))
 
 (defmethod digest-sequence ((digest-name symbol) sequence &rest kwargs)
   (apply #'digest-sequence (make-digest digest-name) sequence kwargs))
 
 (defmethod digest-sequence (state sequence &key (start 0) end
-                                             digest (digest-start 0))
+                                                digest (digest-start 0))
   (declare (type index start))
   (check-type sequence (vector (unsigned-byte 8)))
   (let ((end (or end (length sequence))))
@@ -303,9 +301,9 @@
 
 (defun list-all-digests ()
   (loop for symbol being each external-symbol of (find-package :ironclad)
-     if (digestp symbol)
-     collect (intern (symbol-name symbol) :keyword) into digests
-     finally (return (sort digests #'string<))))
+        if (digestp symbol)
+        collect (intern (symbol-name symbol) :keyword) into digests
+        finally (return (sort digests #'string<))))
 
 (defun digest-supported-p (name)
   "Return T if the digest NAME is a valid digest name."
@@ -320,7 +318,7 @@
   (error 'unsupported-digest :name digest-name))
 
 (defmethod update-digest (digester (stream stream) &key buffer (start 0) end
-                          &allow-other-keys)
+                                                   &allow-other-keys)
   (update-digest-from-stream digester stream
                              :buffer buffer :start start :end end))
 
@@ -342,7 +340,7 @@
 ;;; If we pass a constant argument to MAKE-DIGEST, convert the
 ;;; MAKE-DIGEST call to a direct call to the state creation function.
 (define-compiler-macro make-digest (&whole form &environment env
-                                           name &rest keys &key &allow-other-keys)
+                                                name &rest keys &key &allow-other-keys)
   (declare (ignore env))
   (cond
     ((or (keywordp name)
@@ -365,16 +363,16 @@
     (t form)))
 
 (define-compiler-macro digest-sequence (&whole form &environment env
-                                               name sequence &rest keys)
+                                                    name sequence &rest keys)
   (declare (ignore env))
   (maybe-expand-one-shot-call form 'digest-sequence name sequence keys))
 
 (define-compiler-macro digest-stream (&whole form &environment env
-                                             name stream &rest keys)
+                                                  name stream &rest keys)
   (declare (ignore env))
   (maybe-expand-one-shot-call form 'digest-stream name stream keys))
 
 (define-compiler-macro digest-file (&whole form &environment env
-                                           name file &rest keys)
+                                                name file &rest keys)
   (declare (ignore env))
   (maybe-expand-one-shot-call form 'digest-file name file keys))

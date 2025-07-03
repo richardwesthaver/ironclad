@@ -1,13 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; groestl.lisp -- implementation of the Grøstl hash function
-
 (in-package :crypto)
 
-
-;;;
 ;;; Parameters
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconstant +groestl-rows+ 8)
   (defconstant +groestl-length-field-length+ +groestl-rows+)
@@ -1249,15 +1243,15 @@
     ;; Compute Q(m)
     (groestl-rnd512q z y 0)
     (loop for i from 1 below (1- +groestl-rounds-512+) by 2 do
-      (groestl-rnd512q y z i)
-      (groestl-rnd512q z y (1+ i)))
+             (groestl-rnd512q y z i)
+             (groestl-rnd512q z y (1+ i)))
     (groestl-rnd512q y outq (1- +groestl-rounds-512+))
 
     ;; Compute P(h + m)
     (groestl-rnd512p inp z 0)
     (loop for i of-type fixnum from 1 below (1- +groestl-rounds-512+) by 2 do
-      (groestl-rnd512p z y (ash i 56))
-      (groestl-rnd512p y z (ash (1+ i) 56)))
+             (groestl-rnd512p z y (ash i 56))
+             (groestl-rnd512p y z (ash (1+ i) 56)))
     (groestl-rnd512p z y (ash (1- +groestl-rounds-512+) 56))
 
     ;; h' = h + Q(m) + P(h + m)
@@ -1290,15 +1284,15 @@
     ;; Compute Q(m)
     (groestl-rnd1024q z y 0)
     (loop for i from 1 below (1- +groestl-rounds-1024+) by 2 do
-      (groestl-rnd1024q y z i)
-      (groestl-rnd1024q z y (1+ i)))
+             (groestl-rnd1024q y z i)
+             (groestl-rnd1024q z y (1+ i)))
     (groestl-rnd1024q y outq (1- +groestl-rounds-1024+))
 
     ;; Compute P(h + m)
     (groestl-rnd1024p inp z 0)
     (loop for i of-type fixnum from 1 below (1- +groestl-rounds-1024+) by 2 do
-      (groestl-rnd1024p z y (ash i 56))
-      (groestl-rnd1024p y z (ash (1+ i) 56)))
+             (groestl-rnd1024p z y (ash i 56))
+             (groestl-rnd1024p y z (ash (1+ i) 56)))
     (groestl-rnd1024p z y (ash (1- +groestl-rounds-1024+) 56))
 
     ;; h' = h + Q(m) + P(h + m)
@@ -1342,15 +1336,15 @@
             (:include groestl)
             (:constructor %make-groestl/256-digest
                 (&aux (state (groestl-make-initial-state 256))
-                   (buffer (make-array #.+groestl-size-512+
-                                       :element-type '(unsigned-byte 8)))))))
+                      (buffer (make-array #.+groestl-size-512+
+                                          :element-type '(unsigned-byte 8)))))))
 
 (defstruct (groestl/224
             (:include groestl)
             (:constructor %make-groestl/224-digest
                 (&aux (state (groestl-make-initial-state 224))
-                   (buffer (make-array #.+groestl-size-512+
-                                       :element-type '(unsigned-byte 8)))))))
+                      (buffer (make-array #.+groestl-size-512+
+                                          :element-type '(unsigned-byte 8)))))))
 
 (defmethod reinitialize-instance ((state groestl) &rest initargs)
   (declare (ignore initargs))
@@ -1413,10 +1407,10 @@
 
     ;; Process data in message
     (loop until (< length block-size) do
-      (funcall transform groestl-state input start)
-      (incf block-counter)
-      (incf start block-size)
-      (decf length block-size))
+             (funcall transform groestl-state input start)
+             (incf block-counter)
+             (incf start block-size)
+             (decf length block-size))
 
     ;; Put remaining message data in buffer
     (when (plusp length)
@@ -1470,8 +1464,8 @@
                    (dynamic-extent temp y z))
           (groestl-rnd512p temp z 0)
           (loop for i from 1 below (1- +groestl-rounds-512+) by 2 do
-            (groestl-rnd512p z y (ash i 56))
-            (groestl-rnd512p y z (ash (1+ i) 56)))
+                   (groestl-rnd512p z y (ash i 56))
+                   (groestl-rnd512p y z (ash (1+ i) 56)))
           (groestl-rnd512p z temp (ash (1- +groestl-rounds-512+) 56))
           (dotimes (i +groestl-cols-512+)
             (setf (aref groestl-state i) (logxor (aref groestl-state i)
@@ -1483,8 +1477,8 @@
                    (dynamic-extent temp y z))
           (groestl-rnd1024p temp y 0)
           (loop for i from 1 below (1- +groestl-rounds-1024+) by 2 do
-            (groestl-rnd1024p y z (ash i 56))
-            (groestl-rnd1024p z y (ash (1+ i) 56)))
+                   (groestl-rnd1024p y z (ash i 56))
+                   (groestl-rnd1024p z y (ash (1+ i) 56)))
           (groestl-rnd1024p y temp (ash (1- +groestl-rounds-1024+) 56))
           (dotimes (i +groestl-cols-1024+)
             (setf (aref groestl-state i) (logxor (aref groestl-state i)

@@ -1,12 +1,9 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; aes.lisp -- implementation of the Rijndael block cipher
-;;;
+
 ;;; Currently limited to 128-bit block sizes, although the full range of
 ;;; key sizes is supported.
-
 (in-package :crypto)
 (in-ironclad-readtable)
-
 
 ;;; FIXME: is it work it to combine these into one large array and
 ;;; subscript into that rather than having separate arrays?  CMUCL

@@ -1,5 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
-
+;;;; ironclad.asd
 (cl:defpackage #:ironclad-system
   (:use :cl :asdf))
 

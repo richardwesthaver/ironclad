@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; cast5.lisp -- implementation of rfc2144 CAST5 algorithm
-
 (in-package :crypto)
 (in-ironclad-readtable)
 

@@ -1,7 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
-
+;;;; elliptic-curve.lisp
 (in-package :crypto)
-
 
 (defgeneric ec-point-on-curve-p (p)
   (:documentation "Return T if the point P is on the curve."))

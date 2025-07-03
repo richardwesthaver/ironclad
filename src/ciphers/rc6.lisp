@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; rc6.lisp -- implementation of the RC6 block cipher
-
 (in-package :ironclad)
 
 (defconstant +rc6/32-p+ #xb7e15163)
@@ -76,8 +74,7 @@
                             ,@forms
                             (setf d (mod32- d (aref round-keys 1))
                                   b (mod32- b (aref round-keys 0)))
-                            (store-words plaintext plaintext-start a b c d)))))))
-) ; EVAL-WHEN
+                            (store-words plaintext plaintext-start a b c d))))))))
 
 (define-block-encryptor rc6 16
   #.(generate-unrolled-rc6-encryption 20))

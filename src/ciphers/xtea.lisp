@@ -1,4 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; xtea.lisp
 (in-package :crypto)
 
 (defconstant +xtea-n-rounds+ 32)

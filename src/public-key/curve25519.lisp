@@ -1,11 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; curve25519.lisp -- implementation of the curve25519 Diffie-Hellman function
-
 (in-package :crypto)
 
-
 ;;; class definitions
-
 (defclass curve25519-public-key ()
   ((y :initarg :y :reader curve25519-key-y :type (simple-array (unsigned-byte 8) (*)))))
 
@@ -23,16 +19,13 @@
     (declare (ignore env))
     (make-load-form-saving-slots p)))
 
-
 ;;; constants and function definitions
-
 (defconstant +curve25519-bits+ 256)
 (defconstant +curve25519-p+ 57896044618658097711785492504343953926634992332820282019728792003956564819949)
 (defconstant +curve25519-a24+ 121666)
 
 (defconst +curve25519-g+
   (make-instance 'curve25519-point :x 9 :z 1))
-
 
 (defmethod ec-scalar-inv ((kind (eql :curve25519)) n)
   (expt-mod n (- +curve25519-p+ 2) +curve25519-p+))

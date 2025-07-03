@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; bcrypt.lisp -- implementation of the bcrypt password hashing function
-
 (in-package :crypto)
-
 
 (defclass bcrypt ()
   ())

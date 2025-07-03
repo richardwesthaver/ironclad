@@ -1,9 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; idea.lisp -- implementation of the IDEA block cipher
 
 ;;; converted mostly from the C code appearing in _Applied Cryptography_
 ;;; by Bruce Schneier to Common Lisp.  Beware the C-isms.
-
 (in-package :crypto)
 
 (defun idea-mul (a b)

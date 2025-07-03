@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; siphash.lisp -- implementation of the SipHash MAC
-
 (in-package :crypto)
-
 
 (defclass siphash (mac)
   ((state :accessor siphash-state

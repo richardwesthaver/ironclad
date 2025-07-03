@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; etm.lisp -- Encrypt then MAC
-
 (in-package :crypto)
-
 
 (defclass etm (aead-mode)
   ((cipher :accessor etm-cipher

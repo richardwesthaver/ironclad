@@ -1,8 +1,6 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; square.lisp -- implementation of the Square block cipher
 
-;;; based on a public domain implementation by Paulo Baretto (FIXME!)
-
+;; based on a public domain implementation by Paulo Baretto (FIXME!)
 (in-package :crypto)
 (in-ironclad-readtable)
 

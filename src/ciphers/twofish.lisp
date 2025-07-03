@@ -1,11 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; twofish.lisp -- implementation of Counterpane's Twofish AES candidate
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
 ;;; various constant data arrays used by Twofish
-
 (declaim (type (simple-octet-vector 256)
                +twofish-q0+ +twofish-q1+))
 (declaim (type (simple-octet-vector 255)
@@ -552,8 +549,7 @@
                 c (logxor c (aref round-keys 2))
                 d (logxor d (aref round-keys 3)))
           (store-words plaintext plaintext-start a b c d)
-          (values)))))
-  ) ; MACROLET
+          (values))))))
 
 (defmethod schedule-key ((cipher twofish) key)
   (multiple-value-bind (round-keys s-boxes) (twofish-key-schedule key)

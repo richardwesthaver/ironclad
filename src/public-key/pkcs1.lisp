@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; pkcs1.lisp -- implementation of OAEP and PSS schemes
-
 (in-package :crypto)
-
 
 ;;; Mask generation function
 (defun mgf (digest-name seed num-bytes)

@@ -1,12 +1,9 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; padding.lisp -- implementation of various padding algorithms
-
 (in-package :crypto)
 
 (defclass padding () ())
 
 ;;; PKCS7 padding
-
 (defclass pkcs7-padding (padding) ())
 
 (defmethod add-padding-bytes ((padding pkcs7-padding) text start block-offset block-size)
@@ -32,9 +29,7 @@
       (error 'invalid-padding :name 'pkcs7 :block text))
     n-padding-bytes))
 
-
 ;;; ANSI X.923 padding
-
 (defclass ansi-x923-padding (padding) ())
 
 (defmethod add-padding-bytes ((padding ansi-x923-padding) text start block-offset block-size)
@@ -65,7 +60,6 @@
 
 
 ;;; ISO 7816-4 padding
-
 (defclass iso-7816-4-padding (padding) ())
 
 (defmethod add-padding-bytes ((padding iso-7816-4-padding) text start block-offset block-size)

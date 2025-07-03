@@ -1,8 +1,5 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; camellia.lisp - implementation of the Camellia block cipher
-
 (in-package :crypto)
-
 
 (defconst +camellia-sbox1+
   (make-array 256

@@ -1,23 +1,13 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; sm3.lisp -- implementation of SM3 (GM/T 0004-2012)
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
-;;;
 ;;; Parameters
-;;;
-
 (defconst +sm3-initial-state+
   #32@(#x7380166f #x4914b2b9 #x172442d7 #xda8a0600
        #xa96f30bc #x163138aa #xe38dee4d #xb0fb0e4e))
 
-
-;;;
 ;;; SM3 rounds
-;;;
-
 (defmacro sm3-p0 (x)
   `(logxor ,x (rol32 ,x 9) (rol32 ,x 17)))
 
@@ -227,11 +217,7 @@
           (aref state 6) (logxor (aref state 6) g)
           (aref state 7) (logxor (aref state 7) h))))
 
-
-;;;
 ;;; Digest structures and functions
-;;;
-
 (defstruct (sm3
             (:constructor %make-sm3-digest nil)
             (:copier nil))

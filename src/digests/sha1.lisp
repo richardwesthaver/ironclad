@@ -1,4 +1,3 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; This is an implementation of the US Secure Hash Algorithm 1 (SHA1),
 ;;;; defined in RFC 3174, written by D. Eastlake and P. Jones, September
 ;;;; 2001.  The RFC was based on the document "Secure Hash Standard",
@@ -20,18 +19,15 @@
 ;;;; This software is "as is", and has no warranty of any kind.  The
 ;;;; authors assume no responsibility for the consequences of any use
 ;;;; of this software.
-
 (in-package :crypto)
 
 ;;; nonlinear functions
-
 (defconstant +k1+ #x5a827999)
 (defconstant +k2+ #x6ed9eba1)
 (defconstant +k3+ #x8f1bbcdc)
 (defconstant +k4+ #xca62c1d6)
 
 ;;; working set
-
 (define-digest-registers (sha1 :endian :big)
   (a #x67452301)
   (b #xefcdab89)
@@ -114,7 +110,6 @@ available."
   (values))
 
 ;;; mid-level
-
 (defstruct (sha1
              (:constructor %make-sha1-digest nil)
              (:constructor %make-sha1-state (regs amount block buffer buffer-index))

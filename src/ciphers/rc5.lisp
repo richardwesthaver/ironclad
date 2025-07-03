@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; rc5.lisp -- implementation of the RC5 encryption algorithm from RFC 2040
-
 (in-package :ironclad)
 
 ;;; RC5 is technically a parameterized cipher admitting a variable
@@ -15,7 +13,6 @@
 ;;; checking, natch).
 ;;;
 ;;; See also the TODO file.
-
 (defconstant +rc5/32-p+ #xb7e15163)
 (defconstant +rc5/32-q+ #x9e3779b9)
 

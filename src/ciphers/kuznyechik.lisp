@@ -1,14 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; kuznyechik.lisp -- implementation of the Kuznyechik block cipher (GOST R 34.12-2015)
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
-;;;
 ;;; Constants
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconst +kuznyechik-s+
     #8@(252 238 221 17 207 110 49 22 251 196 250 218 35 197 4 77

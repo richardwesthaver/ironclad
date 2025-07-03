@@ -1,4 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; math.lisp
 (in-package :crypto)
 
 (defun egcd (a b)
@@ -19,9 +19,7 @@ denominator."
        (values d u_d v_d))
    (setq q (floor d c))))
 
-
 ;;; Some number theory functions taken from Maxima
-
 (defun jacobi (a b)
   (declare (integer a b) (optimize (speed 3)))
   (cond ((zerop b)
@@ -158,9 +156,7 @@ denominator."
       (incf b))
     (zerop (lucas-sequence (1+ n) b n))))
 
-
 ;;; modular arithmetic utilities
-
 (defun modular-inverse (n modulus)
   "Returns M such that N * M mod MODULUS = 1"
   (declare (type (integer 1 *) modulus))
@@ -225,9 +221,7 @@ computing the modular inverse."
 faster than expt-mod, but it is not safe against side channel timing attacks."
   (power-mod n exponent modulus))
 
-
 ;;; prime numbers utilities
-
 (defconst +small-primes+
   (make-array 269
               :element-type 'fixnum

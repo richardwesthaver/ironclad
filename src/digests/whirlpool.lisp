@@ -1,16 +1,15 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
+;;;; whirlpool.lisp
 ;;;; This file implements the Whirlpool message-digest algoritm, as
 ;;;; defined in The WHIRLPOOL Hashing Function, by Paulo S.L.M. Barreto1
 ;;;; and Vincent Rijmen, revised on Revised on May 24, 2003 (1).
-;;;;
+
 ;;;; It was written by Peter Gijsels.
 ;;;; Copyright (c) 2007, Peter Gijsels
 ;;;; All rights reserved.
-;;;;
+
 ;;;; This software is "as is", and has no warranty of any kind.  The
 ;;;; authors assume no responsibility for the consequences of any use of
 ;;;; this software.
-
 (in-package :crypto)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -20,8 +19,7 @@
 (defconstant +whirlpool-regs-hash-offset+ 0)
 (defconstant +whirlpool-regs-k-offset+ 16)
 (defconstant +whirlpool-regs-state-offset+ 32)
-(defconstant +whirlpool-regs-l-offset+ 48)
-) ; EVAL-WHEN
+(defconstant +whirlpool-regs-l-offset+ 48)) ; EVAL-WHEN
 
 (defconst +pristine-whirlpool-registers+ (initial-whirlpool-regs))
 
@@ -37,12 +35,10 @@
       (t (stuff-registers (make-array 64 :element-type '(unsigned-byte 8)) 0)))))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-(defconstant +whirlpool-rounds+ 10 "The number of rounds. The default is 10.")
-)
+  (defconstant +whirlpool-rounds+ 10 "The number of rounds. The default is 10."))
 
 (eval-when (:compile-toplevel)
   ;;; Code to generate lookup tables +C-EVEN+ and +C-ODD+.
-
   (defconst +e+ #(#x1 #xB #x9 #xC #xD #x6 #xF #x3 #xE #x8 #x7 #x4 #xA #x2 #x5 #x0))
   (defconst +r+ #(#x7 #xC #xB #xD #xE #x4 #x9 #xF #x6 #x3 #x8 #xA #x2 #x5 #x1 #x0))
 
@@ -128,8 +124,7 @@
        for i below 8
        do (dotimes (j 256)
             (setf (aref result i j) (calculate-table-word i j 4)))
-       finally (return result)))
-) ; EVAL-WHEN
+       finally (return result)))) ; EVAL-WHEN
 
 (declaim (type (simple-array (unsigned-byte 32) (22)) +rc+))
 (defconst +rc+
@@ -180,8 +175,7 @@
         (setf (,to ,(1+ (* 2 i)))
          ,(generate-xor `,(loop for index in indices
                                 for j below 8
-                                collect `(aref +c-odd+ ,j ,index)))))))
-) ; EVAL-WHEN
+                                collect `(aref +c-odd+ ,j ,index)))))))) ; EVAL-WHEN
 
 (defmacro lookup-in-c (to from)
   `(progn
@@ -227,7 +221,6 @@ word block of input, and updates the working state in the regs."
     regs))
 
 ;;; Mid-Level Drivers
-
 (defstruct (whirlpool
              (:constructor %make-whirlpool-digest nil)
              (:constructor %make-whirlpool-state

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; os-prng.lisp -- OS-provided pseudo-random number generator
-
 (in-package :crypto)
 
 #+unix

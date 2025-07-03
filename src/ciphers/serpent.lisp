@@ -1,11 +1,7 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; serpent.lisp -- implementation of the Serpent block cipher
-
 (in-package :crypto)
 
-
 ;;; S-Boxes
-
 (defmacro serpent-sbox0 (r0 r1 r2 r3 o0 o1 o2 o3 t0)
   `(setf ,r3 (logxor ,r3 ,r0)
          ,t0 ,r1
@@ -542,9 +538,7 @@
   (setf (serpent-subkeys cipher) (serpent-generate-subkeys (serpent-pad-key key)))
   cipher)
 
-
 ;;; Rounds
-
 (define-block-encryptor serpent 16
   (let ((subkeys (serpent-subkeys context))
         (t0 0)

@@ -1,6 +1,4 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; rc2.lisp -- implementation of the RC2 cipher algorithm from RFC 2268
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
@@ -18,7 +16,6 @@
 ;;; rounds for many ciphers.
 
 ;;; PITABLE from section 2.
-
 (defconst +rc2-pitable+
   #8@(#xd9 #x78 #xf9 #xc4 #x19 #xdd #xb5 #xed #x28 #xe9 #xfd #x79 #x4a #xa0 #xd8 #x9d
 #xc6 #x7e #x37 #x83 #x2b #x76 #x53 #x8e #x62 #x4c #x64 #x88 #x44 #x8b #xfb #xa2

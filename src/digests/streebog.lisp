@@ -1,14 +1,8 @@
-;;;; -*- mode: lisp; indent-tabs-mode: nil -*-
 ;;;; streebog.lisp -- implementation of Streebog (GOST R 34.11-2012)
-
 (in-package :crypto)
 (in-ironclad-readtable)
 
-
-;;;
 ;;; Parameters
-;;;
-
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defconst +streebog-buffer0+
     #64@(0 0 0 0 0 0 0 0))
@@ -1104,11 +1098,7 @@
     (declare (type (simple-array (unsigned-byte 64) (8 256)) constants))
     (aref constants i j)))
 
-
-;;;
 ;;; Steebog rounds
-;;;
-
 (defmacro streebog-x (x y z)
   `(setf (aref ,z 0) (logxor (aref ,x 0) (aref ,y 0))
          (aref ,z 1) (logxor (aref ,x 1) (aref ,y 1))
@@ -1184,11 +1174,7 @@
     (streebog-x data m h))
   (values))
 
-
-;;;
 ;;; Digest structures and functions
-;;;
-
 (defstruct (streebog
             (:constructor %make-streebog-digest nil)
             (:copier nil))
